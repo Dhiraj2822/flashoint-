@@ -1,0 +1,83 @@
+/* ==========================================================================
+   DEVELOPMENT PRIORITY INTELLIGENCE (DPI) — DESIGN SYSTEM TOKENS
+   A single, cohesive design system across Login, Policymaker Dashboard,
+   and Citizen Portal.
+   ========================================================================== */
+
+:root {
+  /* --- Brand / Primary Accent (Single Brand Color across all screens) --- */
+  --dpi-primary: #059669;            /* Primary Green (buttons, active states, key links) */
+  --dpi-primary-hover: #047857;      /* Darker Green for hover states */
+  --dpi-primary-light: #10b981;      /* Bright accent green */
+  --dpi-primary-pale: #ecfdf5;       /* Lightest green tint for subtle surfaces / focus rings */
+  --dpi-primary-border: #a7f3d0;     /* Border for primary/active elements */
+
+  /* --- Neutrals & Surfaces (Dark navy/slate text, clean white surfaces) --- */
+  --dpi-bg-app: #f8fafc;             /* App canvas background */
+  --dpi-bg-surface: #ffffff;         /* Primary card and panel surface */
+  --dpi-bg-subtle: #f1f5f9;          /* Secondary background / table headers */
+  --dpi-bg-input: #ffffff;           /* Form inputs background */
+  --dpi-border-subtle: #e2e8f0;      /* Standard divider / card border */
+  --dpi-border-strong: #cbd5e1;      /* Interactive border (inputs, dropdowns) */
+  --dpi-border-focus: #059669;       /* Input focus ring color */
+
+  /* --- Typography Colors --- */
+  --dpi-text-primary: #0f172a;       /* Dark navy/slate for primary copy and headings */
+  --dpi-text-secondary: #334155;     /* Slate for subheadings and body copy */
+  --dpi-text-muted: #64748b;         /* Muted gray for captions, footnotes, hints */
+  --dpi-text-inverse: #ffffff;       /* Pure white text on dark/primary surfaces */
+
+  /* --- Status Palette (Unified 3-level Red / Amber / Green system) --- */
+  /* Critical / High Need / Danger / Gap */
+  --dpi-status-critical-text: #991b1b;
+  --dpi-status-critical-fill: #dc2626;
+  --dpi-status-critical-bg: #fef2f2;
+  --dpi-status-critical-border: #fecaca;
+
+  /* Moderate Need / Warning / Synthetic Demo Data */
+  --dpi-status-warning-text: #92400e;
+  --dpi-status-warning-fill: #d97706;
+  --dpi-status-warning-bg: #fffbeb;
+  --dpi-status-warning-border: #fde68a;
+
+  /* Baseline Need / Success / Real Verified Data / Completed */
+  --dpi-status-success-text: #065f46;
+  --dpi-status-success-fill: #059669;
+  --dpi-status-success-bg: #ecfdf5;
+  --dpi-status-success-border: #a7f3d0;
+
+  /* --- Typography Tokens --- */
+  --dpi-font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --dpi-font-weight-regular: 400;    /* Body text */
+  --dpi-font-weight-medium: 500;     /* Labels, section headers with slight letter-spacing */
+  --dpi-font-weight-semibold: 600;   /* Card titles, stat values, table headers */
+  --dpi-font-weight-bold: 700;       /* Headings, main numbers */
+  --dpi-font-weight-extrabold: 800;  /* Hero titles */
+
+  --dpi-font-size-xs: 11px;
+  --dpi-font-size-sm: 12px;
+  --dpi-font-size-base: 14px;
+  --dpi-font-size-md: 16px;
+  --dpi-font-size-lg: 18px;
+  --dpi-font-size-xl: 22px;
+  --dpi-font-size-2xl: 28px;
+
+  /* --- Border Radius (Consistent 8–10px scale) --- */
+  --dpi-radius-sm: 6px;              /* Small chips, subtle tags */
+  --dpi-radius-base: 8px;            /* Buttons, inputs, small cards */
+  --dpi-radius-lg: 10px;             /* Standard cards, panels, modals */
+  --dpi-radius-pill: 9999px;         /* Badges, pill counters */
+
+  /* --- Spacing System (Base 8px grid) --- */
+  --dpi-space-1: 8px;                /* 8px: minimal gap */
+  --dpi-space-2: 16px;               /* 16px: standard card padding, form spacing */
+  --dpi-space-3: 24px;               /* 24px: section spacing */
+  --dpi-space-4: 32px;               /* 32px: page container margins */
+  --dpi-space-5: 40px;               /* 40px: hero spacing */
+  --dpi-space-6: 48px;               /* 48px: large layout breaks */
+
+  /* --- Shadows & Elevation --- */
+  --dpi-shadow-card: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+  --dpi-shadow-elevated: 0 4px 6px -1px rgba(15, 23, 42, 0.08), 0 2px 4px -2px rgba(15, 23, 42, 0.04);
+  --dpi-shadow-focus: 0 0 0 3px rgba(5, 150, 105, 0.18);
+}
