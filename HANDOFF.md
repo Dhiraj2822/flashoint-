@@ -1,4 +1,4 @@
-﻿# HANDOFF.md - Development Priority Intelligence UI Redesign
+# HANDOFF.md - Development Priority Intelligence UI Redesign
 
 ## Status: COMPLETE (Steps 0 to 7)
 
@@ -10,12 +10,14 @@
 |------|-------------|
 | frontend/styles/tokens.css | NEW - Full design token system (colors, spacing, radius, shadows, typography) |
 | frontend/styles/shared.css | NEW - Shared component styles (buttons, badges, cards, score pills, status chips) |
-| frontend/css/style.css | Refactored to use token vars; fixed off-brand blue hover; chip-ongoing amber; alert-silent green; severity-badge neutral gray |
-| frontend/index.html | Lucide icons on all tab buttons; segmented lang control; IND country pill; logout button styled via CSS; emoji empty state replaced with Lucide map icon |
+| frontend/css/style.css | Refactored to use token vars; sidebar vertical nav; full-content-view grid; fixed 420px map; summary strips; empty-state cards; quadrant chart pills |
+| frontend/index.html | Sidebar vertical nav replaces horizontal tabs; Leaflet map moved into Map & Rankings view; Lucide icons throughout |
 | frontend/login.html | Dark navy bg; glassmorphism card; Lucide role icons; segmented lang; demo creds collapsible details |
 | frontend/citizen.html | Topbar emoji replaced with Lucide leaf; cat-cards use Lucide icons; req-cat-dots use Lucide; lang-row segmented-control style; status badges use dpi-token vars; success icon is Lucide check-circle-2; local CSS vars point to dpi-tokens |
-| frontend/js/panels.js | All emoji purged from HTML templates; fmtScore() rounds scores to integers; badge text cleaned; status chip text plain |
-| frontend/js/app.js | Auto-select top-ranked district on load; footer emoji purged; map fallback text clean |
+| frontend/js/panels.js | All views upgraded with summary metric strips, large visuals, proper empty-state cards, and supporting data tables (Mismatch, Silent Needs, Impact, Command Center) |
+| frontend/js/charts.js | Resized quadrant scatter SVG to 370px height with high-contrast labels, badges, and tick marks |
+| frontend/js/app.js | Sidebar vertical nav switching; full-content-view toggle; Leaflet map size invalidation; reactive view updates on filter changes |
+| frontend/js/i18n.js | Updated tab and view labels for English, Hindi, and Marathi |
 | frontend/js/map.js | Popup uses Math.round(score); badge text SYNTHETIC DEMO without emoji |
 
 ---
@@ -43,30 +45,26 @@
 
 ## UX Improvements Delivered
 
-1. Auto-select top district - Evidence panel pre-populated on load
-2. Segmented language control - Tab-style switcher replaces 3 separate ghost buttons
-3. Lucide icons everywhere - Zero emoji remaining in UI
-4. Tab labels shortened - Ranked Recommendations becomes Ranked etc.
-5. Consistent score pills - Red 75+ / Amber 50-74 / Green below 50 across table, evidence panel, map popup
-6. Token-driven citizen portal - Local CSS vars now point to dpi-* tokens
-
----
-
-## Known Visual Gaps (Intentionally Deferred)
-
-| Gap | Reason Deferred |
-|-----|----------------|
-| photo-analysis-card inline styles | Backend-driven dynamic content; functional state indicators |
-| Map tile loading gray on slow connections | External CDN dependency |
-| Breakdown chart SVG colors in charts.js | Backend computes breakdowns, no safe frontend-only change |
-| Scatter chart SVG in mismatch tab | Same as above |
+1. **Vertical Left Navigation (Step 3b)**: Replaced horizontal tabs with clean sidebar nav below filters; Map & Rankings keeps fixed ~420px Leaflet map and natural table scroll; all other views expand to full content width.
+2. **Under-Filled Views Resolution (Step 5b)**:
+   - **Investment-Demand Mismatch**: Resized 370px quadrant scatter plot with high-contrast banners; added quadrant summary count strip; replaced floating text with structured empty state; added full district investment-demand classification matrix table.
+   - **Silent Need Flags**: Added pilot monitoring summary strip; enhanced alert cards; added regional reporting vs. vulnerability matrix table.
+   - **Impact Measurement**: Added completed intervention summary strip; taller before-after demand drop visuals; added empirical project verification table.
+   - **AI Command Center**: Added architectural capability strip; categorized query preset buttons; added queryable analytical dimensions registry.
+3. **Auto-select top district**: Evidence panel pre-populated on load.
+4. **Segmented language control**: Segmented pill control replaces ghost buttons.
+5. **Lucide icons everywhere**: Zero emoji remaining across the application.
 
 ---
 
 ## Commit History
 
-REDESIGN STEP 0: Token system + shared.css foundation
-REDESIGN STEPS 3-7: Full UI consistency pass - Lucide icons replace emoji, segmented lang control, auto-select top district, integer score formatting, token-based colors throughout
+- `REDESIGN STEP 0: Token system + shared.css foundation`
+- `REDESIGN STEP 1: Global shell: icons + shared components`
+- `REDESIGN STEP 2: Login screen redesign`
+- `REDESIGN STEPS 3-7: Full UI consistency pass`
+- `REDESIGN STEP 3b: Restructure dashboard navigation from horizontal tabs to left vertical nav`
+- `REDESIGN STEP 5b: Fix under-filled views with expanded charts, summary strips, and supporting tables`
 
 ---
 

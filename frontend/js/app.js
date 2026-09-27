@@ -6,9 +6,11 @@ let selectedDistrict = null;
 async function loadAllData() {
   try {
     allDistricts = await getDistrictsAPI();
+    window.allDistrictsData = allDistricts;
   } catch (e) {
     console.error("Failed to load districts:", e);
     allDistricts = [];
+    window.allDistrictsData = [];
   }
 }
 
@@ -45,6 +47,11 @@ function applyFilters() {
 
   renderMapMarkers(filtered, onSelectDistrict);
   renderRankedTab(filtered);
+
+  // Keep all view tabs synchronized with current filter state
+  getSilentNeedsAPI().then(sn => renderSilentNeedsTab(sn, filtered)).catch(() => renderSilentNeedsTab([], filtered));
+  getMismatchesAPI().then(m => renderMismatchTab(m, filtered)).catch(() => renderMismatchTab([], filtered));
+  getImpactAPI().then(imp => renderImpactTab(imp, filtered)).catch(() => renderImpactTab([], filtered));
 
   window.selectDistrictRow = function(dname) {
     const target = filtered.find(d => d.district_name.toLowerCase() === dname.toLowerCase());
@@ -176,13 +183,13 @@ async function main() {
   renderRankedTab(allDistricts);
 
   // Silent Needs
-  getSilentNeedsAPI().then(renderSilentNeedsTab).catch(() => renderSilentNeedsTab([]));
+  getSilentNeedsAPI().then(sn => renderSilentNeedsTab(sn, allDistricts)).catch(() => renderSilentNeedsTab([], allDistricts));
 
   // Mismatches
   getMismatchesAPI().then(m => renderMismatchTab(m, allDistricts)).catch(() => renderMismatchTab([], allDistricts));
 
   // Impact
-  getImpactAPI().then(renderImpactTab).catch(() => renderImpactTab([]));
+  getImpactAPI().then(imp => renderImpactTab(imp, allDistricts)).catch(() => renderImpactTab([], allDistricts));
 
   // AI Command Center
   renderCommandTab();

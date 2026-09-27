@@ -511,6 +511,154 @@ body {
 .chip { border-radius: 4px; padding: 2px 8px; font-size: 10px; font-weight: 700; }
 .chip-red { background: #fee2e2; color: #991b1b; }
 .chip-amber { background: #fef3c7; color: #92400e; }
+.chip-green { background: #dcfce7; color: #15803d; }
+.chip-slate { background: #f1f5f9; color: #475569; }
+
+/* ---- Summary Strips & Metrics ---- */
+.summary-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.summary-stat-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.summary-stat-card .stat-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-text-secondary);
+}
+.summary-stat-card .stat-number {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--dpi-text-primary);
+  line-height: 1.2;
+}
+.summary-stat-card .stat-desc {
+  font-size: 11px;
+  color: var(--dpi-text-muted);
+}
+
+/* ---- Quadrant Summary Pills ---- */
+.quadrant-summary-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.summary-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--dpi-text-secondary);
+}
+.summary-pill .pill-count {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--dpi-text-primary);
+  background: var(--dpi-bg-app);
+  padding: 1px 7px;
+  border-radius: 10px;
+  border: 1px solid var(--color-border);
+}
+.summary-pill.pill-critical { border-left: 3.5px solid var(--dpi-status-critical-fill); }
+.summary-pill.pill-balanced { border-left: 3.5px solid var(--dpi-status-success-fill); }
+.summary-pill.pill-warning { border-left: 3.5px solid var(--dpi-status-warning-fill); }
+.summary-pill.pill-baseline { border-left: 3.5px solid #64748b; }
+.dot-gray { background: #64748b; }
+
+/* ---- Quadrant Chart Card ---- */
+.quadrant-chart-card {
+  overflow-x: auto;
+}
+
+/* ---- Empty State Card ---- */
+.empty-state-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 20px;
+  text-align: center;
+  gap: 8px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+.empty-state-card h4 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--dpi-text-primary);
+  margin-top: 6px;
+}
+.empty-state-card p {
+  font-size: 13px;
+  color: var(--dpi-text-muted);
+  max-width: 480px;
+}
+
+/* ---- Query Chips ---- */
+.query-category-block {
+  margin-bottom: 12px;
+}
+.query-category-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--dpi-text-secondary);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.query-chips-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.query-chip-btn {
+  background: var(--color-surface);
+  border: 1px solid var(--dpi-border-strong);
+  border-radius: var(--dpi-radius-pill);
+  padding: 6px 12px;
+  font-family: var(--font-stack);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-accent);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-align: left;
+}
+.query-chip-btn:hover {
+  background: var(--color-accent-light);
+  border-color: var(--color-accent);
+  color: var(--dpi-primary-hover);
+}
 
 /* ---- Impact Cards ---- */
 .impact-card { }
