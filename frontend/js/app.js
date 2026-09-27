@@ -179,6 +179,18 @@ async function main() {
 
   // Activate first tab
   activateTab("ranked");
+
+  // Initialize Lucide icons
+  if (typeof lucide !== "undefined") {
+    lucide.createIcons();
+  }
 }
 
+window.refreshIcons = function() {
+  if (typeof lucide !== "undefined") {
+    lucide.createIcons();
+  }
+};
+
 document.addEventListener("DOMContentLoaded", main);
+

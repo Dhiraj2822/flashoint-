@@ -123,7 +123,7 @@ uvicorn backend.app.main:app --reload --port 8000
 | Step | Title | Status |
 | :--- | :--- | :--- |
 | **STEP 0** | Audit + design tokens (`tokens.css`, hardcoded audit in HANDOFF.md) | **DONE** |
-| **STEP 1** | Global shell: icons + shared components (Lucide/Feather CDN, shared buttons/inputs/cards/badges) | PENDING |
+| **STEP 1** | Global shell: icons + shared components (Lucide CDN, shared buttons/inputs/cards/badges) | **DONE** |
 | **STEP 2** | Login screen redesign (Styled inputs, clean brand glyph, muted demo credentials box) | PENDING |
 | **STEP 3** | Policymaker dashboard: navbar + layout skeleton (Single primary green, compact lang dropdown, rebalanced columns) | PENDING |
 | **STEP 4** | Policymaker dashboard: default populated state (Auto-select top district on load, whole numbers, soft map legend) | PENDING |
@@ -191,8 +191,16 @@ uvicorn backend.app.main:app --reload --port 8000
 
 ---
 
+### STEP 1 — Global Shell: Icons + Shared Components
+- Created `frontend/styles/shared.css` with token-based button (`.btn-primary`, `.btn-secondary`, `.btn-subtle`), input, card, badge (`.badge-real`, `.badge-synthetic`), and status chip styling.
+- Connected Lucide CDN script (`https://unpkg.com/lucide@latest`) across `index.html`, `login.html`, and `citizen.html`.
+- Connected `frontend/css/style.css` to import `tokens.css` and `shared.css`.
+- Wired `window.refreshIcons()` helper across all screens to automatically instantiate Lucide SVG icons.
+
+---
+
 ## NEXT STEP
-Proceed to **STEP 1 — Global shell: icons + shared components**. Add Lucide CDN script and shared button, input, card, and badge styles using tokens.
+Proceed to **STEP 2 — Login screen redesign**. Style inputs with proper borders/focus rings, demote/pair the "IN" glyph, mute BRICS badge, quiet down the demo credentials box, and replace role emojis with Lucide icons.
 
 
 

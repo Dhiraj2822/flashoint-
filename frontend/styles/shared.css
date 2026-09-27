@@ -1,0 +1,319 @@
+/* ==========================================================================
+   DEVELOPMENT PRIORITY INTELLIGENCE (DPI) — SHARED COMPONENTS & BASE STYLES
+   Inherited across Login, Policymaker Dashboard, and Citizen Portal.
+   ========================================================================== */
+
+@import url('./tokens.css');
+
+/* --- Global Typography & Box Model --- */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--dpi-font-family);
+  color: var(--dpi-text-primary);
+  background-color: var(--dpi-bg-app);
+  font-size: var(--dpi-font-size-base);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* --- Shared Icon Alignment & Sizes --- */
+.dpi-icon,
+i[data-lucide],
+svg.lucide {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  stroke-width: 2px;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.dpi-icon-sm,
+svg.lucide.dpi-icon-sm {
+  width: 14px;
+  height: 14px;
+}
+
+.dpi-icon-md,
+svg.lucide.dpi-icon-md {
+  width: 20px;
+  height: 20px;
+}
+
+.dpi-icon-lg,
+svg.lucide.dpi-icon-lg {
+  width: 24px;
+  height: 24px;
+}
+
+.dpi-icon-xl,
+svg.lucide.dpi-icon-xl {
+  width: 32px;
+  height: 32px;
+}
+
+/* --- Shared Form Inputs --- */
+input[type="text"],
+input[type="password"],
+input[type="email"],
+select,
+textarea {
+  font-family: var(--dpi-font-family);
+  font-size: var(--dpi-font-size-base);
+  color: var(--dpi-text-primary);
+  background-color: var(--dpi-bg-input);
+  border: 1.5px solid var(--dpi-border-strong);
+  border-radius: var(--dpi-radius-base);
+  padding: 10px 14px;
+  width: 100%;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+
+input[type="text"]::placeholder,
+input[type="password"]::placeholder,
+textarea::placeholder {
+  color: var(--dpi-text-muted);
+  opacity: 0.75;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--dpi-border-focus);
+  box-shadow: var(--dpi-shadow-focus);
+  background-color: #ffffff;
+}
+
+input[type="text"]:disabled,
+select:disabled,
+textarea:disabled {
+  background-color: var(--dpi-bg-subtle);
+  border-color: var(--dpi-border-subtle);
+  color: var(--dpi-text-muted);
+  cursor: not-allowed;
+}
+
+/* --- Shared Buttons --- */
+.btn-primary,
+button.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--dpi-space-1);
+  background-color: var(--dpi-primary);
+  color: var(--dpi-text-inverse);
+  font-family: var(--dpi-font-family);
+  font-size: var(--dpi-font-size-base);
+  font-weight: var(--dpi-font-weight-semibold);
+  padding: 10px 18px;
+  border: 1.5px solid transparent;
+  border-radius: var(--dpi-radius-base);
+  cursor: pointer;
+  box-shadow: var(--dpi-shadow-card);
+  transition: background-color 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+  user-select: none;
+  text-decoration: none;
+}
+
+.btn-primary:hover {
+  background-color: var(--dpi-primary-hover);
+  box-shadow: var(--dpi-shadow-elevated);
+}
+
+.btn-primary:active {
+  transform: translateY(1px);
+}
+
+.btn-primary:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Secondary Button (Outline Style) */
+.btn-secondary,
+button.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--dpi-space-1);
+  background-color: transparent;
+  color: var(--dpi-text-primary);
+  font-family: var(--dpi-font-family);
+  font-size: var(--dpi-font-size-base);
+  font-weight: var(--dpi-font-weight-medium);
+  padding: 10px 18px;
+  border: 1.5px solid var(--dpi-border-strong);
+  border-radius: var(--dpi-radius-base);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.btn-secondary:hover {
+  background-color: var(--dpi-bg-subtle);
+  border-color: var(--dpi-primary);
+  color: var(--dpi-primary);
+}
+
+/* Subtle / Ghost Button */
+.btn-subtle,
+button.btn-subtle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background-color: transparent;
+  color: var(--dpi-text-secondary);
+  font-family: var(--dpi-font-family);
+  font-size: var(--dpi-font-size-sm);
+  font-weight: var(--dpi-font-weight-medium);
+  padding: 6px 12px;
+  border: 1px solid transparent;
+  border-radius: var(--dpi-radius-base);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-subtle:hover {
+  background-color: var(--dpi-bg-subtle);
+  color: var(--dpi-text-primary);
+}
+
+/* --- Shared Cards --- */
+.card,
+.panel-card,
+.stat-card {
+  background-color: var(--dpi-bg-surface);
+  border: 1px solid var(--dpi-border-subtle);
+  border-radius: var(--dpi-radius-lg);
+  box-shadow: var(--dpi-shadow-card);
+  padding: var(--dpi-space-2);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.card:hover,
+.stat-card:hover {
+  box-shadow: var(--dpi-shadow-elevated);
+}
+
+/* Card Header typography */
+.card h3,
+.card h4 {
+  font-size: var(--dpi-font-size-sm);
+  font-weight: var(--dpi-font-weight-bold);
+  color: var(--dpi-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: var(--dpi-space-1);
+  display: flex;
+  align-items: center;
+  gap: var(--dpi-space-1);
+}
+
+/* --- Badges & Pills --- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: var(--dpi-radius-pill);
+  font-size: var(--dpi-font-size-xs);
+  font-weight: var(--dpi-font-weight-bold);
+  letter-spacing: 0.4px;
+  line-height: 1.2;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+
+/* Standardized Green Pill for REAL DATA */
+.badge-real {
+  background-color: var(--dpi-status-success-bg);
+  color: var(--dpi-status-success-text);
+  border: 1px solid var(--dpi-status-success-border);
+}
+
+/* Standardized Amber Pill for SYNTHETIC DEMO DATA */
+.badge-synthetic {
+  background-color: var(--dpi-status-warning-bg);
+  color: var(--dpi-status-warning-text);
+  border: 1px solid var(--dpi-status-warning-border);
+}
+
+/* Priority Score Pill (Red / Amber / Green) */
+.score-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 10px;
+  border-radius: var(--dpi-radius-pill);
+  font-weight: var(--dpi-font-weight-bold);
+  font-size: var(--dpi-font-size-sm);
+  line-height: 1.4;
+}
+
+.score-pill.score-high,
+.score-high {
+  background-color: var(--dpi-status-critical-bg);
+  color: var(--dpi-status-critical-text);
+  border: 1px solid var(--dpi-status-critical-border);
+}
+
+.score-pill.score-med,
+.score-med {
+  background-color: var(--dpi-status-warning-bg);
+  color: var(--dpi-status-warning-text);
+  border: 1px solid var(--dpi-status-warning-border);
+}
+
+.score-pill.score-low,
+.score-low {
+  background-color: var(--dpi-status-success-bg);
+  color: var(--dpi-status-success-text);
+  border: 1px solid var(--dpi-status-success-border);
+}
+
+/* Status Chips (Ongoing / Completed / Gap / Received / Processing) */
+.status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: var(--dpi-radius-pill);
+  font-size: var(--dpi-font-size-xs);
+  font-weight: var(--dpi-font-weight-semibold);
+  letter-spacing: 0.2px;
+}
+
+.status-chip.chip-completed,
+.chip-completed,
+.status-received {
+  background-color: var(--dpi-status-success-bg);
+  color: var(--dpi-status-success-text);
+  border: 1px solid var(--dpi-status-success-border);
+}
+
+.status-chip.chip-ongoing,
+.chip-ongoing,
+.status-processing {
+  background-color: var(--dpi-status-warning-bg);
+  color: var(--dpi-status-warning-text);
+  border: 1px solid var(--dpi-status-warning-border);
+}
+
+.status-chip.chip-gap,
+.chip-gap {
+  background-color: var(--dpi-status-critical-bg);
+  color: var(--dpi-status-critical-text);
+  border: 1px solid var(--dpi-status-critical-border);
+}

@@ -8,6 +8,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+
+  <!-- Design System Tokens & Shared Components -->
+  <link rel="stylesheet" href="styles/tokens.css"/>
+  <link rel="stylesheet" href="styles/shared.css"/>
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -364,6 +371,8 @@
   const role = sessionStorage.getItem('dpi_role');
   if (role === 'admin') window.location.href = 'index.html';
   if (role === 'citizen') window.location.href = 'citizen.html';
+
+  if (typeof lucide !== 'undefined') lucide.createIcons();
 </script>
 </body>
 </html>

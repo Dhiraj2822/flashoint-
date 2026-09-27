@@ -3,27 +3,30 @@
    Clean, accessible, government-dashboard aesthetic
    ====================================================== */
 
+@import url('../styles/tokens.css');
+@import url('../styles/shared.css');
+
 :root {
-  --color-bg: #f8fafc;
-  --color-surface: #ffffff;
-  --color-border: #e2e8f0;
-  --color-text-primary: #0f172a;
-  --color-text-secondary: #475569;
+  --color-bg: var(--dpi-bg-app);
+  --color-surface: var(--dpi-bg-surface);
+  --color-border: var(--dpi-border-subtle);
+  --color-text-primary: var(--dpi-text-primary);
+  --color-text-secondary: var(--dpi-text-secondary);
   --color-accent: #1d4ed8;
   --color-accent-light: #eff6ff;
-  --color-real: #059669;
-  --color-synthetic: #d97706;
-  --color-danger: #dc2626;
-  --color-warning: #d97706;
-  --color-success: #059669;
-  --color-score-high: #dc2626;
-  --color-score-med: #d97706;
-  --color-score-low: #059669;
-  --font-stack: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --radius: 8px;
-  --radius-sm: 4px;
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
-  --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+  --color-real: var(--dpi-status-success-fill);
+  --color-synthetic: var(--dpi-status-warning-fill);
+  --color-danger: var(--dpi-status-critical-fill);
+  --color-warning: var(--dpi-status-warning-fill);
+  --color-success: var(--dpi-status-success-fill);
+  --color-score-high: var(--dpi-status-critical-fill);
+  --color-score-med: var(--dpi-status-warning-fill);
+  --color-score-low: var(--dpi-status-success-fill);
+  --font-stack: var(--dpi-font-family);
+  --radius: var(--dpi-radius-lg);
+  --radius-sm: var(--dpi-radius-base);
+  --shadow-sm: var(--dpi-shadow-card);
+  --shadow-md: var(--dpi-shadow-elevated);
   --topbar-height: 60px;
   --sidebar-width: 220px;
 }
