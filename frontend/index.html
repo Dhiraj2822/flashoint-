@@ -64,77 +64,82 @@
   <!-- ===== MAIN LAYOUT ===== -->
   <div class="main-layout">
 
-    <!-- Left Sidebar: Filters -->
-    <aside class="sidebar" role="complementary" aria-label="Filters">
-      <h3><i data-lucide="sliders-horizontal" class="dpi-icon-sm"></i> Filters</h3>
+    <!-- Left Sidebar: Filters & Navigation -->
+    <aside class="sidebar" role="complementary" aria-label="Filters and views navigation">
+      <div class="sidebar-section">
+        <h3 class="sidebar-heading"><i data-lucide="sliders-horizontal" class="dpi-icon-sm"></i> Filters</h3>
 
-      <div class="filter-group">
-        <label for="filter-state" data-i18n="filter_state">State</label>
-        <select id="filter-state" aria-label="Filter by state">
-          <option value="all" data-i18n="all_states">All States</option>
-          <option value="Maharashtra">Maharashtra</option>
-          <option value="Uttar Pradesh">Uttar Pradesh</option>
-        </select>
+        <div class="filter-group">
+          <label for="filter-state" data-i18n="filter_state">State</label>
+          <select id="filter-state" aria-label="Filter by state">
+            <option value="all" data-i18n="all_states">All States</option>
+            <option value="Maharashtra">Maharashtra</option>
+            <option value="Uttar Pradesh">Uttar Pradesh</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="filter-sector" data-i18n="filter_sector">Sector</label>
+          <select id="filter-sector" aria-label="Filter by sector">
+            <option value="all">All Sectors</option>
+            <option value="healthcare" selected>Healthcare</option>
+            <option value="water_sanitation" disabled>Water &amp; Sanitation (coming)</option>
+            <option value="roads_transport" disabled>Roads &amp; Transport (coming)</option>
+            <option value="education" disabled>Education (coming)</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="filter-quality" data-i18n="filter_quality">Data Quality</label>
+          <select id="filter-quality" aria-label="Filter by data quality">
+            <option value="all" data-i18n="all_qualities">All (Real + Synthetic)</option>
+            <option value="real" data-i18n="real_only">Real Data Only</option>
+            <option value="synthetic" data-i18n="synthetic_only">Synthetic Only</option>
+          </select>
+        </div>
       </div>
 
-      <div class="filter-group">
-        <label for="filter-sector" data-i18n="filter_sector">Sector</label>
-        <select id="filter-sector" aria-label="Filter by sector">
-          <option value="all">All Sectors</option>
-          <option value="healthcare" selected>Healthcare</option>
-          <option value="water_sanitation" disabled>Water &amp; Sanitation (coming)</option>
-          <option value="roads_transport" disabled>Roads &amp; Transport (coming)</option>
-          <option value="education" disabled>Education (coming)</option>
-        </select>
-      </div>
+      <div class="sidebar-divider"></div>
 
-      <div class="filter-group">
-        <label for="filter-quality" data-i18n="filter_quality">Data Quality</label>
-        <select id="filter-quality" aria-label="Filter by data quality">
-          <option value="all" data-i18n="all_qualities">All (Real + Synthetic)</option>
-          <option value="real" data-i18n="real_only">Real Data Only</option>
-          <option value="synthetic" data-i18n="synthetic_only">Synthetic Only</option>
-        </select>
-      </div>
-    </aside>
+      <!-- Vertical Navigation List -->
+      <nav class="sidebar-nav" role="tablist" aria-label="Dashboard views">
+        <h3 class="sidebar-heading"><i data-lucide="layout-grid" class="dpi-icon-sm"></i> Views</h3>
 
-    <!-- Center: Map + Tabs -->
-    <main class="center-panel" role="main">
-
-      <!-- Leaflet Map -->
-      <div id="leaflet-map" aria-label="Pilot district priority map — Pune, Thane, Varanasi"></div>
-
-      <!-- Tab Bar -->
-      <nav class="tabs-bar" role="tablist" aria-label="Dashboard views">
-        <button class="tab-btn" data-tab="ranked" role="tab" aria-selected="false" aria-controls="tab-ranked-panel" id="tab-btn-ranked">
-          <i data-lucide="bar-chart-3" class="dpi-icon-sm"></i>
-          <span data-i18n="tab_ranked">Ranked</span>
+        <button class="nav-item tab-btn active" data-tab="ranked" role="tab" aria-selected="true" aria-controls="tab-ranked-panel" id="tab-btn-ranked">
+          <i data-lucide="map" class="dpi-icon-sm"></i>
+          <span data-i18n="tab_ranked">Map &amp; Rankings</span>
         </button>
-        <button class="tab-btn" data-tab="silent" role="tab" aria-selected="false" aria-controls="tab-silent-panel" id="tab-btn-silent">
+        <button class="nav-item tab-btn" data-tab="silent" role="tab" aria-selected="false" aria-controls="tab-silent-panel" id="tab-btn-silent">
           <i data-lucide="bell-off" class="dpi-icon-sm"></i>
-          <span data-i18n="tab_silent">Silent Needs</span>
+          <span data-i18n="tab_silent">Silent Need Flags</span>
         </button>
-        <button class="tab-btn" data-tab="mismatch" role="tab" aria-selected="false" aria-controls="tab-mismatch-panel" id="tab-btn-mismatch">
+        <button class="nav-item tab-btn" data-tab="mismatch" role="tab" aria-selected="false" aria-controls="tab-mismatch-panel" id="tab-btn-mismatch">
           <i data-lucide="scale" class="dpi-icon-sm"></i>
-          <span data-i18n="tab_mismatch">Mismatch</span>
+          <span data-i18n="tab_mismatch">Investment Mismatch</span>
         </button>
-        <button class="tab-btn" data-tab="impact" role="tab" aria-selected="false" aria-controls="tab-impact-panel" id="tab-btn-impact">
+        <button class="nav-item tab-btn" data-tab="impact" role="tab" aria-selected="false" aria-controls="tab-impact-panel" id="tab-btn-impact">
           <i data-lucide="trending-up" class="dpi-icon-sm"></i>
-          <span data-i18n="tab_impact">Impact</span>
+          <span data-i18n="tab_impact">Impact Measurement</span>
         </button>
-        <button class="tab-btn" data-tab="command" role="tab" aria-selected="false" aria-controls="tab-command-panel" id="tab-btn-command">
+        <button class="nav-item tab-btn" data-tab="command" role="tab" aria-selected="false" aria-controls="tab-command-panel" id="tab-btn-command">
           <i data-lucide="bot" class="dpi-icon-sm"></i>
-          <span data-i18n="tab_command">AI Query</span>
+          <span data-i18n="tab_command">AI Command Center</span>
         </button>
-        <button class="tab-btn" data-tab="submit" role="tab" aria-selected="false" aria-controls="tab-submit-panel" id="tab-btn-submit">
+        <button class="nav-item tab-btn" data-tab="submit" role="tab" aria-selected="false" aria-controls="tab-submit-panel" id="tab-btn-submit">
           <i data-lucide="send" class="dpi-icon-sm"></i>
-          <span data-i18n="tab_submit">Submit</span>
+          <span data-i18n="tab_submit">Submit Request</span>
         </button>
       </nav>
+    </aside>
 
-      <!-- Tab Content Panels -->
+    <!-- Center: Main Content Area -->
+    <main class="center-panel" role="main">
+
+      <!-- View Content Panels -->
       <div class="tab-panels">
-        <div id="tab-ranked-panel" class="tab-panel" role="tabpanel" aria-labelledby="tab-btn-ranked">
+        <!-- Map & Rankings: keeps the map fixed at ~420px height, ranked table below in normal scroll -->
+        <div id="tab-ranked-panel" class="tab-panel active" role="tabpanel" aria-labelledby="tab-btn-ranked">
+          <div id="leaflet-map" aria-label="Pilot district priority map — Pune, Thane, Varanasi"></div>
           <div id="tab-ranked-content">
             <div class="loading-state">Loading district rankings...</div>
           </div>

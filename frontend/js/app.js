@@ -70,12 +70,35 @@ function setupTabs() {
 
 function activateTab(tabId) {
   document.querySelectorAll(".tab-btn").forEach(btn => {
-    btn.classList.toggle("active", btn.dataset.tab === tabId);
-    btn.setAttribute("aria-selected", btn.dataset.tab === tabId);
+    const isActive = btn.dataset.tab === tabId;
+    btn.classList.toggle("active", isActive);
+    btn.setAttribute("aria-selected", isActive ? "true" : "false");
   });
   document.querySelectorAll(".tab-panel").forEach(panel => {
     panel.classList.toggle("active", panel.id === `tab-${tabId}-panel`);
   });
+
+  // Toggle layout mode: Map & Rankings has 3 columns with evidence panel;
+  // All other views use full content width (no map, no evidence panel)
+  const mainLayout = document.querySelector(".main-layout");
+  if (mainLayout) {
+    if (tabId === "ranked") {
+      mainLayout.classList.remove("full-content-view");
+    } else {
+      mainLayout.classList.add("full-content-view");
+    }
+  }
+
+  // When switching back to Map & Rankings, ensure Leaflet calculates dimensions properly
+  if (tabId === "ranked" && typeof mapInstance !== "undefined" && mapInstance) {
+    setTimeout(() => {
+      try {
+        mapInstance.invalidateSize();
+      } catch (e) {
+        console.warn("Leaflet resize notice:", e);
+      }
+    }, 120);
+  }
 }
 
 function setupLangSwitcher() {

@@ -28,7 +28,7 @@
   --shadow-sm: var(--dpi-shadow-card);
   --shadow-md: var(--dpi-shadow-elevated);
   --topbar-height: 60px;
-  --sidebar-width: 240px;
+  --sidebar-width: 255px;
   --evidence-width: 380px;
 }
 
@@ -150,40 +150,56 @@ body {
   font-weight: 600;
 }
 
-/* ---- Main Layout (Rebalanced Columns: No Dead Space) ---- */
+/* ---- Main Layout (Rebalanced Columns) ---- */
 .main-layout {
   display: grid;
   grid-template-columns: var(--sidebar-width) minmax(460px, 1fr) var(--evidence-width);
   grid-template-rows: 1fr;
   height: calc(100vh - var(--topbar-height));
   overflow: hidden;
+  transition: grid-template-columns 0.2s ease;
 }
 
-/* ---- Sidebar ---- */
+/* Full content width mode for views without map/evidence panel */
+.main-layout.full-content-view {
+  grid-template-columns: var(--sidebar-width) 1fr;
+}
+
+.main-layout.full-content-view .evidence-panel {
+  display: none !important;
+}
+
+/* ---- Sidebar: Filters & Views Navigation ---- */
 .sidebar {
   background: var(--color-surface);
   border-right: 1px solid var(--color-border);
   padding: 16px;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }
-.sidebar h3 {
+.sidebar-heading {
   font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.8px;
   color: var(--color-text-secondary);
-  margin-bottom: 16px;
+  margin-bottom: 12px;
   display: flex;
   align-items: center;
   gap: 6px;
 }
-.filter-group { margin-bottom: 16px; }
+.sidebar-section {
+  display: flex;
+  flex-direction: column;
+}
+.filter-group { margin-bottom: 14px; }
 .filter-group label {
   display: block;
   font-size: 12px;
   font-weight: 600;
   color: var(--color-text-secondary);
-  margin-bottom: 6px;
+  margin-bottom: 5px;
 }
 .filter-group select {
   width: 100%;
@@ -202,60 +218,88 @@ body {
   box-shadow: var(--dpi-shadow-focus);
 }
 
-/* ---- Center Panel ---- */
+.sidebar-divider {
+  height: 1px;
+  background: var(--color-border);
+  margin: 14px 0 16px 0;
+  flex-shrink: 0;
+}
+
+/* Vertical Navigation List */
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 12px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  color: var(--dpi-text-secondary);
+  font-family: var(--font-stack);
+  font-size: 13px;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+.nav-item:hover {
+  background: var(--color-accent-light);
+  color: var(--color-accent);
+}
+.nav-item.active {
+  background: var(--color-accent);
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: 0 1px 4px rgba(5, 150, 105, 0.3);
+}
+.nav-item i {
+  flex-shrink: 0;
+  color: var(--dpi-text-muted);
+  transition: color 0.15s ease;
+}
+.nav-item:hover i {
+  color: var(--color-accent);
+}
+.nav-item.active i {
+  color: #ffffff;
+}
+
+/* ---- Center Panel (Main Content Area) ---- */
 .center-panel {
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow-y: auto;
   height: 100%;
+  padding: 20px;
+  background: var(--color-bg);
 }
 
+/* Map fixed at ~420px height, full width of content area (minus evidence panel on right) */
 #leaflet-map {
-  flex: 0 0 38%;
-  min-height: 250px;
-  max-height: 360px;
+  height: 420px;
+  width: 100%;
+  border-radius: var(--radius);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 20px;
   background: #e2e8f0;
-}
-
-/* ---- Tabs ---- */
-.tabs-bar {
-  display: flex;
-  background: var(--color-surface);
-  border-bottom: 1.5px solid var(--color-border);
-  overflow-x: auto;
   flex-shrink: 0;
 }
-.tab-btn {
-  padding: 10px 16px;
-  border: none;
-  background: transparent;
-  font-family: var(--font-stack);
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--color-text-secondary);
-  cursor: pointer;
-  white-space: nowrap;
-  border-bottom: 3px solid transparent;
-  margin-bottom: -1.5px;
-  transition: all 0.2s;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-.tab-btn:hover { color: var(--color-accent); background: var(--color-accent-light); }
-.tab-btn.active { color: var(--color-accent); border-bottom-color: var(--color-accent); }
 
-/* Tab content area below map expands to fill remaining vertical height */
+/* View Panels: ranked table flows naturally below map in normal page scroll — no inner scrollable box */
 .tab-panels {
-  flex: 1 1 auto;
-  overflow-y: auto;
-  min-height: 0;
-  background: var(--color-bg);
+  width: 100%;
 }
 .tab-panel {
   display: none;
-  padding: 16px;
-  min-height: 100%;
+  width: 100%;
 }
 .tab-panel.active {
   display: block;
@@ -637,9 +681,9 @@ body {
 .ds-meta { color: var(--color-text-secondary); margin-left: auto; }
 .census-note { color: var(--color-text-secondary); font-style: italic; margin-top: 8px; }
 
-/* ---- Responsive (Mobile) ---- */
+/* ---- Responsive (Mobile / Tablet) ---- */
 @media (max-width: 900px) {
-  .main-layout {
+  .main-layout, .main-layout.full-content-view {
     display: flex;
     flex-direction: column;
     height: auto;
@@ -647,20 +691,31 @@ body {
   }
   .sidebar {
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    flex-direction: column;
     gap: 12px;
     border-right: none;
     border-bottom: 1px solid var(--color-border);
-    padding: 12px;
+    padding: 14px;
   }
-  .sidebar h3 { display: none; }
-  .filter-group { min-width: 140px; flex: 1; }
-  #leaflet-map { min-height: 250px; }
+  .sidebar-section {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .sidebar-heading { margin-bottom: 6px; }
+  .filter-group { min-width: 140px; flex: 1; margin-bottom: 0; }
+  .sidebar-divider { margin: 8px 0; }
+  .sidebar-nav {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 6px;
+  }
+  #leaflet-map { height: 320px; }
   .evidence-panel {
     border-left: none;
     border-top: 1px solid var(--color-border);
   }
-  .stats-grid { grid-template-columns: repeat(4, 1fr); }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
   .topbar-tagline { display: none; }
 }
