@@ -41,19 +41,24 @@
       <span class="topbar-tagline" data-i18n="app_tagline">Multilingual AI &amp; Deterministic Analytics Platform for DPI</span>
     </div>
     <div class="topbar-controls">
-      <span class="country-pill" aria-label="Country: India">🇮🇳 India</span>
-      <nav class="lang-switcher" aria-label="Language switcher">
+      <span class="country-pill" aria-label="Country: India">
+        <span class="country-code-tag">IND</span> India Pilot
+      </span>
+      <nav class="lang-segmented-control" aria-label="Language switcher">
         <button class="lang-btn active" data-lang="en" aria-label="Switch to English">EN</button>
         <button class="lang-btn" data-lang="hi" aria-label="हिन्दी में बदलें">हि</button>
         <button class="lang-btn" data-lang="mr" aria-label="मराठीत बदला">मरा</button>
       </nav>
-      <button id="admin-logout-btn" onclick="(function(){sessionStorage.removeItem('dpi_role');sessionStorage.removeItem('dpi_user');window.location.href='login.html';})()" style="background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.85);padding:6px 14px;border-radius:8px;font-size:0.78rem;cursor:pointer;font-family:inherit;">Sign out</button>
+      <button id="admin-logout-btn" onclick="(function(){sessionStorage.removeItem('dpi_role');sessionStorage.removeItem('dpi_user');window.location.href='login.html';})()">
+        <i data-lucide="log-out" class="dpi-icon-sm"></i> Sign out
+      </button>
     </div>
   </header>
 
   <!-- Offline notice -->
   <div id="offline-notice" role="status" aria-live="polite">
-    ⚠️ <span data-i18n="offline_notice">Offline Demo Mode — Connected to local static mock data.</span>
+    <i data-lucide="wifi-off" class="dpi-icon-sm"></i>
+    <span data-i18n="offline_notice">Offline Demo Mode — Connected to local static mock data.</span>
   </div>
 
   <!-- ===== MAIN LAYOUT ===== -->
@@ -61,7 +66,7 @@
 
     <!-- Left Sidebar: Filters -->
     <aside class="sidebar" role="complementary" aria-label="Filters">
-      <h3>Filters</h3>
+      <h3><i data-lucide="sliders-horizontal" class="dpi-icon-sm"></i> Filters</h3>
 
       <div class="filter-group">
         <label for="filter-state" data-i18n="filter_state">State</label>
@@ -102,22 +107,28 @@
       <!-- Tab Bar -->
       <nav class="tabs-bar" role="tablist" aria-label="Dashboard views">
         <button class="tab-btn" data-tab="ranked" role="tab" aria-selected="false" aria-controls="tab-ranked-panel" id="tab-btn-ranked">
-          📊 <span data-i18n="tab_ranked">Ranked Recommendations</span>
+          <i data-lucide="bar-chart-3" class="dpi-icon-sm"></i>
+          <span data-i18n="tab_ranked">Ranked</span>
         </button>
         <button class="tab-btn" data-tab="silent" role="tab" aria-selected="false" aria-controls="tab-silent-panel" id="tab-btn-silent">
-          🔇 <span data-i18n="tab_silent">Silent Need Flags</span>
+          <i data-lucide="bell-off" class="dpi-icon-sm"></i>
+          <span data-i18n="tab_silent">Silent Needs</span>
         </button>
         <button class="tab-btn" data-tab="mismatch" role="tab" aria-selected="false" aria-controls="tab-mismatch-panel" id="tab-btn-mismatch">
-          ⚖️ <span data-i18n="tab_mismatch">Investment–Demand Mismatch</span>
+          <i data-lucide="scale" class="dpi-icon-sm"></i>
+          <span data-i18n="tab_mismatch">Mismatch</span>
         </button>
         <button class="tab-btn" data-tab="impact" role="tab" aria-selected="false" aria-controls="tab-impact-panel" id="tab-btn-impact">
-          📈 <span data-i18n="tab_impact">Impact Measurement</span>
+          <i data-lucide="trending-up" class="dpi-icon-sm"></i>
+          <span data-i18n="tab_impact">Impact</span>
         </button>
         <button class="tab-btn" data-tab="command" role="tab" aria-selected="false" aria-controls="tab-command-panel" id="tab-btn-command">
-          🤖 <span data-i18n="tab_command">AI Command Center</span>
+          <i data-lucide="bot" class="dpi-icon-sm"></i>
+          <span data-i18n="tab_command">AI Query</span>
         </button>
         <button class="tab-btn" data-tab="submit" role="tab" aria-selected="false" aria-controls="tab-submit-panel" id="tab-btn-submit">
-          📝 <span data-i18n="tab_submit">Submit Request</span>
+          <i data-lucide="send" class="dpi-icon-sm"></i>
+          <span data-i18n="tab_submit">Submit</span>
         </button>
       </nav>
 
@@ -125,37 +136,37 @@
       <div class="tab-panels">
         <div id="tab-ranked-panel" class="tab-panel" role="tabpanel" aria-labelledby="tab-btn-ranked">
           <div id="tab-ranked-content">
-            <div class="loading-state">⏳ Loading district rankings...</div>
+            <div class="loading-state">Loading district rankings...</div>
           </div>
         </div>
 
         <div id="tab-silent-panel" class="tab-panel" role="tabpanel" aria-labelledby="tab-btn-silent">
           <div id="tab-silent-content">
-            <div class="loading-state">⏳ Detecting silent needs...</div>
+            <div class="loading-state">Detecting silent needs...</div>
           </div>
         </div>
 
         <div id="tab-mismatch-panel" class="tab-panel" role="tabpanel" aria-labelledby="tab-btn-mismatch">
           <div id="tab-mismatch-content">
-            <div class="loading-state">⏳ Analysing investment mismatches...</div>
+            <div class="loading-state">Analysing investment mismatches...</div>
           </div>
         </div>
 
         <div id="tab-impact-panel" class="tab-panel" role="tabpanel" aria-labelledby="tab-btn-impact">
           <div id="tab-impact-content">
-            <div class="loading-state">⏳ Loading impact measurements...</div>
+            <div class="loading-state">Loading impact measurements...</div>
           </div>
         </div>
 
         <div id="tab-command-panel" class="tab-panel" role="tabpanel" aria-labelledby="tab-btn-command">
           <div id="tab-command-content">
-            <div class="loading-state">⏳ Initialising AI command center...</div>
+            <div class="loading-state">Initialising AI command center...</div>
           </div>
         </div>
 
         <div id="tab-submit-panel" class="tab-panel" role="tabpanel" aria-labelledby="tab-btn-submit">
           <div id="tab-submit-content">
-            <div class="loading-state">⏳ Loading citizen request form...</div>
+            <div class="loading-state">Loading citizen request form...</div>
           </div>
         </div>
       </div>
@@ -166,7 +177,7 @@
     <aside class="evidence-panel" role="complementary" aria-label="District evidence panel">
       <div id="evidence-panel">
         <div class="panel-empty-state">
-          <div class="empty-icon">🗺️</div>
+          <i data-lucide="map" class="dpi-icon-xl" style="color:var(--dpi-text-muted);"></i>
           <p>Click a district on the map to view the full evidence panel.</p>
         </div>
       </div>
@@ -177,7 +188,7 @@
   <!-- ===== FOOTER ===== -->
   <footer class="app-footer" role="contentinfo">
     <div id="datasets-footer">
-      <div class="loading-state">⏳ Loading dataset information...</div>
+      <div class="loading-state">Loading dataset information...</div>
     </div>
   </footer>
 

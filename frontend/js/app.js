@@ -106,8 +106,8 @@ async function renderFooter() {
       </div>`).join("");
 
     footer.innerHTML = `
-      <div class="footer-datasets"><h4>📦 Data Sources & Versions</h4>${dsHtml}</div>
-      <div class="census-note">📋 <em>${note}</em></div>`;
+      <div class="footer-datasets"><h4>Data Sources &amp; Versions</h4>${dsHtml}</div>
+      <div class="census-note"><em>${note}</em></div>`;
   } catch (e) {
     footer.innerHTML = `<p>Dataset metadata unavailable.</p>`;
   }
@@ -129,9 +129,9 @@ async function main() {
       console.warn("Leaflet map library (L) not available.");
       const mapEl = document.getElementById("leaflet-map");
       if (mapEl) {
-        mapEl.innerHTML = `<div style="padding: 24px; text-align: center; color: #475569; font-weight: 500;">
-          🗺️ <strong>Interactive Pilot Region View</strong><br>
-          <span style="font-size: 0.9em; color: #64748b;">(Select a district from the ranked recommendations table below to inspect full evidence panel.)</span>
+        mapEl.innerHTML = `<div style="padding: 24px; text-align: center; color: var(--dpi-text-muted); font-weight: 500;">
+          <strong>Interactive Pilot Region View</strong><br>
+          <span style="font-size: 0.9em;">(Select a district from the ranked recommendations table below to inspect full evidence panel.)</span>
         </div>`;
       }
     }
@@ -179,6 +179,12 @@ async function main() {
 
   // Activate first tab
   activateTab("ranked");
+
+  // Auto-select the top-ranked district so the evidence panel is pre-populated on load
+  if (allDistricts && allDistricts.length > 0) {
+    const topDistrict = allDistricts.find(d => d.rank === 1) || allDistricts[0];
+    onSelectDistrict(topDistrict);
+  }
 
   // Initialize Lucide icons
   if (typeof lucide !== "undefined") {

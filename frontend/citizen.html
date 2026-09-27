@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
@@ -19,14 +19,14 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --green: #059669;
-      --green-light: #10b981;
-      --green-pale: #d1fae5;
+      --green: var(--dpi-primary);
+      --green-light: var(--dpi-primary-light);
+      --green-pale: var(--dpi-primary-pale);
       --bg: #f0fdf4;
-      --surface: #ffffff;
-      --border: #d1d5db;
-      --text: #111827;
-      --text-muted: #6b7280;
+      --surface: var(--dpi-bg-surface);
+      --border: var(--dpi-border-subtle);
+      --text: var(--dpi-text-primary);
+      --text-muted: var(--dpi-text-muted);
       --radius: 16px;
     }
 
@@ -52,7 +52,6 @@
       align-items: center;
       gap: 12px;
     }
-    .topbar-icon { font-size: 1.8rem; }
     .topbar-title {
       color: #fff;
       font-weight: 700;
@@ -68,22 +67,11 @@
       align-items: center;
       gap: 12px;
     }
-    .lang-row { display: flex; gap: 6px; }
-    .lang-btn {
-      background: rgba(255,255,255,0.15);
-      border: 1px solid rgba(255,255,255,0.25);
-      color: #fff;
-      padding: 6px 12px;
-      border-radius: 8px;
-      font-size: 0.78rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s;
-      font-family: 'Inter', sans-serif;
-    }
-    .lang-btn:hover, .lang-btn.active {
-      background: rgba(255,255,255,0.3);
-    }
+    /* lang-segmented-control defined in shared.css — reuse */
+    .lang-row { display: inline-flex; align-items: center; background: rgba(0,0,0,0.22); border: 1px solid rgba(255,255,255,0.25); border-radius: var(--dpi-radius-base); padding: 2px; gap: 2px; }
+    .lang-btn { background: transparent; border: none; border-radius: 6px; padding: 4px 10px; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.85); cursor: pointer; transition: all 0.15s ease; font-family: 'Inter', sans-serif; }
+    .lang-btn:hover { color: #fff; background: rgba(255,255,255,0.15); }
+    .lang-btn.active { background: #fff; color: #065f46; font-weight: 700; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
     .logout-btn {
       background: rgba(255,255,255,0.12);
       border: 1px solid rgba(255,255,255,0.2);
@@ -185,7 +173,8 @@
       background: #d1fae5;
       box-shadow: 0 0 0 3px rgba(5,150,105,0.15);
     }
-    .cat-icon { font-size: 1.8rem; display: block; margin-bottom: 6px; }
+    .cat-icon { display: flex; align-items: center; justify-content: center; margin-bottom: 8px; color: var(--dpi-text-muted); }
+    .cat-card.selected .cat-icon { color: var(--dpi-primary); }
     .cat-name { font-size: 0.82rem; font-weight: 600; color: var(--text); }
 
     /* Form card */
@@ -401,12 +390,12 @@
     .req-status {
       font-size: 0.72rem;
       padding: 3px 10px;
-      border-radius: 20px;
+      border-radius: var(--dpi-radius-pill);
       font-weight: 600;
       flex-shrink: 0;
     }
-    .status-received { background: #dbeafe; color: #1d4ed8; }
-    .status-processing { background: #fef3c7; color: #92400e; }
+    .status-received { background: var(--dpi-status-success-bg); color: var(--dpi-status-success-text); border: 1px solid var(--dpi-status-success-border); }
+    .status-processing { background: var(--dpi-status-warning-bg); color: var(--dpi-status-warning-text); border: 1px solid var(--dpi-status-warning-border); }
 
     /* Char counter */
     .char-counter {
@@ -429,7 +418,7 @@
 <!-- Top bar -->
 <header class="topbar">
   <div class="topbar-brand">
-    <span class="topbar-icon">🌿</span>
+    <i data-lucide="leaf" style="color:#6ee7b7;width:22px;height:22px;"></i>
     <div>
       <span class="topbar-title">DPI Citizen Portal</span>
       <span class="topbar-sub">Development Priority Intelligence</span>
@@ -472,35 +461,35 @@
   <!-- Category selector -->
   <div class="section-label">Step 1 — Choose category</div>
   <div class="category-grid">
-    <div class="cat-card selected" id="cat-healthcare" onclick="selectCat('healthcare','🏥','Healthcare')">
-      <span class="cat-icon">🏥</span>
+    <div class="cat-card selected" id="cat-healthcare" onclick="selectCat('healthcare','hospital','Healthcare')">
+      <div class="cat-icon"><i data-lucide="hospital" style="width:28px;height:28px;"></i></div>
       <div class="cat-name" data-i18n="cat_health">Healthcare</div>
     </div>
-    <div class="cat-card" id="cat-water" onclick="selectCat('water_sanitation','💧','Water & Sanitation')">
-      <span class="cat-icon">💧</span>
-      <div class="cat-name" data-i18n="cat_water">Water & Sanitation</div>
+    <div class="cat-card" id="cat-water" onclick="selectCat('water_sanitation','droplets','Water &amp; Sanitation')">
+      <div class="cat-icon"><i data-lucide="droplets" style="width:28px;height:28px;"></i></div>
+      <div class="cat-name" data-i18n="cat_water">Water &amp; Sanitation</div>
     </div>
-    <div class="cat-card" id="cat-roads" onclick="selectCat('roads_transport','🛣️','Roads & Transport')">
-      <span class="cat-icon">🛣️</span>
-      <div class="cat-name" data-i18n="cat_roads">Roads & Transport</div>
+    <div class="cat-card" id="cat-roads" onclick="selectCat('roads_transport','road','Roads &amp; Transport')">
+      <div class="cat-icon"><i data-lucide="road" style="width:28px;height:28px;"></i></div>
+      <div class="cat-name" data-i18n="cat_roads">Roads &amp; Transport</div>
     </div>
-    <div class="cat-card" id="cat-education" onclick="selectCat('education','🏫','Education')">
-      <span class="cat-icon">🏫</span>
+    <div class="cat-card" id="cat-education" onclick="selectCat('education','school','Education')">
+      <div class="cat-icon"><i data-lucide="school" style="width:28px;height:28px;"></i></div>
       <div class="cat-name" data-i18n="cat_edu">Education</div>
     </div>
   </div>
 
   <!-- Form -->
   <div class="form-card" id="form-section">
-    <h3>📝 <span id="form-title">Describe the issue</span></h3>
+    <h3><i data-lucide="file-pen-line" style="width:18px;height:18px;vertical-align:middle;"></i> <span id="form-title">Describe the issue</span></h3>
 
     <!-- Voice and Photo Row -->
     <div class="voice-row">
       <button class="btn-voice" id="voice-btn" onclick="toggleVoice()">
-        🎙️ <span id="voice-label">Speak your request</span>
+        <i data-lucide="mic" style="width:16px;height:16px;"></i> <span id="voice-label">Speak your request</span>
       </button>
       <label class="btn-voice" style="cursor:pointer;" id="photo-upload-label">
-        📷 <span id="photo-label">Attach Photo Evidence</span>
+        <i data-lucide="camera" style="width:16px;height:16px;"></i> <span id="photo-label">Attach Photo Evidence</span>
         <input type="file" id="photo-input" accept="image/*" style="display:none;" onchange="handlePhotoUpload(event)"/>
       </label>
     </div>
@@ -508,7 +497,7 @@
     <!-- AI Multimodal Photo Verification Card -->
     <div id="photo-analysis-card" style="display:none; background:#ecfdf5; border:1.5px solid #10b981; border-radius:12px; padding:14px; margin-bottom:18px;">
       <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
-        <span style="font-weight:700; font-size:0.85rem; color:#065f46;">✨ Gemini Multimodal Vision Assessment</span>
+        <span style="font-weight:700; font-size:0.85rem; color:#065f46;">Gemini Multimodal Vision Assessment</span>
         <span id="photo-badge" style="background:#10b981; color:#fff; font-size:0.7rem; font-weight:700; padding:2px 8px; border-radius:12px;">Verified Evidence</span>
       </div>
       <div style="display:flex; gap:12px; align-items:flex-start;">
@@ -549,26 +538,26 @@
     </div>
 
     <button class="btn-submit" id="submit-btn" onclick="submitRequest()">
-      📤 Submit Development Request
+      <i data-lucide="send" style="width:16px;height:16px;"></i> Submit Development Request
     </button>
   </div>
 
   <!-- Success state -->
   <div class="success-card" id="success-card">
-    <span class="success-icon">✅</span>
+    <i data-lucide="check-circle-2" style="color:#059669;width:48px;height:48px;display:block;margin:0 auto 12px;"></i>
     <h3>Request Submitted!</h3>
     <p>Your request has been received and will be analysed by AI for priority scoring. Policymakers will be notified.</p>
     <div class="success-id" id="success-id">REQ-XXXX</div>
     <br>
-    <button class="btn-new" onclick="resetForm()">+ Submit another request</button>
+    <button class="btn-new btn-primary" onclick="resetForm()">Submit another request</button>
   </div>
 
   <!-- Recent (mock) requests -->
   <div class="recent-card" style="margin-top: 24px;">
-    <h3>📋 Recent Community Requests — <span style="color:var(--text-muted); font-weight:500; font-size:0.85rem;" data-i18n="from_your_area">From your area</span></h3>
+    <h3>Recent Community Requests — <span style="color:var(--text-muted); font-weight:500; font-size:0.85rem;" data-i18n="from_your_area">From your area</span></h3>
     <div id="recent-list">
       <div class="req-item">
-        <div class="req-cat-dot">🏥</div>
+        <div class="req-cat-dot"><i data-lucide="hospital" style="width:18px;height:18px;color:var(--dpi-primary);"></i></div>
         <div class="req-body">
           <div class="req-text">No primary health centre in our block. Nearest hospital is 22km away.</div>
           <div class="req-meta">Healthcare · Pune · 3 days ago</div>
@@ -576,7 +565,7 @@
         <div class="req-status status-processing">Processing</div>
       </div>
       <div class="req-item">
-        <div class="req-cat-dot">💧</div>
+        <div class="req-cat-dot"><i data-lucide="droplets" style="width:18px;height:18px;color:var(--dpi-primary);"></i></div>
         <div class="req-body">
           <div class="req-text">Tap water pipeline damaged and not functional for 3 weeks.</div>
           <div class="req-meta">Water & Sanitation · Thane · 1 week ago</div>
@@ -584,7 +573,7 @@
         <div class="req-status status-received">Received</div>
       </div>
       <div class="req-item">
-        <div class="req-cat-dot">🛣️</div>
+        <div class="req-cat-dot"><i data-lucide="road" style="width:18px;height:18px;color:var(--dpi-primary);"></i></div>
         <div class="req-body">
           <div class="req-text">Connecting road to main highway is unpaved and flooded during monsoon.</div>
           <div class="req-meta">Roads & Transport · Varanasi · 2 weeks ago</div>
@@ -647,6 +636,7 @@
     if (el) el.classList.add('selected');
     selectedCat = catId;
     selectedCatName = name;
+    if (typeof lucide !== 'undefined') lucide.createIcons();
   }
 
   // Voice

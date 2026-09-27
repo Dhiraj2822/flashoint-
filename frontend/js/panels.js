@@ -2,9 +2,14 @@
 
 function dataBadge(quality) {
   if (quality === "real") {
-    return `<span class="badge badge-real" aria-label="Real Data">✓ REAL DATA</span>`;
+    return `<span class="badge badge-real" aria-label="Real Data">REAL DATA</span>`;
   }
-  return `<span class="badge badge-synthetic" aria-label="Synthetic Demo Data">⚡ SYNTHETIC DEMO DATA</span>`;
+  return `<span class="badge badge-synthetic" aria-label="Synthetic Demo Data">SYNTHETIC DEMO</span>`;
+}
+
+// Round score to a whole number for display
+function fmtScore(score) {
+  return Math.round(Number(score) || 0);
 }
 
 // ---- Evidence Panel ----
@@ -15,9 +20,10 @@ function renderEvidencePanel(district, explanationData) {
   if (!district) {
     panel.innerHTML = `
       <div class="panel-empty-state">
-        <div class="empty-icon">🗺️</div>
+        <i data-lucide="map" class="dpi-icon-xl" style="color:var(--dpi-text-muted);"></i>
         <p>Click a district on the map to view the full evidence panel.</p>
       </div>`;
+    updateUIElements();
     return;
   }
 
@@ -25,13 +31,14 @@ function renderEvidencePanel(district, explanationData) {
   const projStatus = district.existing_project_status || "gap_unaddressed";
   const projName = district.matching_projects?.[0]?.name || "None found";
   const projBadge = projStatus === "active_project_found"
-    ? `<span class="status-chip chip-ongoing">● Ongoing Project</span>`
+    ? `<span class="status-chip chip-ongoing">Ongoing Project</span>`
     : projStatus === "completed_project_found"
-    ? `<span class="status-chip chip-completed">✓ Completed Project</span>`
-    : `<span class="status-chip chip-gap">✗ No Active Project</span>`;
+    ? `<span class="status-chip chip-completed">Completed Project</span>`
+    : `<span class="status-chip chip-gap">No Active Project</span>`;
 
   const explanation = explanationData?.explanation || "Loading explanation...";
   const footnote = explanationData?.footnote || "";
+  const score = fmtScore(district.priority_score);
 
   panel.innerHTML = `
     <div class="evidence-header">
@@ -40,13 +47,13 @@ function renderEvidencePanel(district, explanationData) {
     </div>
 
     <div class="score-display">
-      <div class="score-ring" style="--score: ${district.priority_score}">
-        <span class="score-value">${district.priority_score}</span>
+      <div class="score-ring" style="--score: ${score}">
+        <span class="score-value">${score}</span>
         <span class="score-label">/ 100</span>
       </div>
       <div class="score-meta">
         <div class="rank-badge">Rank #${district.rank || 1}</div>
-        <div class="sector-tag">${(district.sector || "healthcare").replace("_", " & ")}</div>
+        <div class="sector-tag">${(district.sector || "healthcare").replace("_", " &amp; ")}</div>
       </div>
     </div>
 
@@ -58,14 +65,14 @@ function renderEvidencePanel(district, explanationData) {
     <div class="card stats-grid">
       <div class="stat-item"><span class="stat-value">${district.population ? (district.population / 100000).toFixed(1) + ' L' : 'N/A'}</span><span class="stat-label">Population</span></div>
       <div class="stat-item"><span class="stat-value">${district.facilities_count ?? 'N/A'}</span><span class="stat-label">Facilities</span></div>
-      <div class="stat-item"><span class="stat-value">₹${district.existing_investment_cr ?? 'N/A'} Cr</span><span class="stat-label">Investment</span></div>
+      <div class="stat-item"><span class="stat-value">${district.existing_investment_cr != null ? '&#8377;' + district.existing_investment_cr + ' Cr' : 'N/A'}</span><span class="stat-label">Investment</span></div>
       <div class="stat-item"><span class="stat-value">${district.citizen_demand_count ?? 'N/A'}</span><span class="stat-label">Requests</span></div>
     </div>
 
     <div class="card">
       <h4 data-i18n="why_this_ranking">Why This Ranking</h4>
       <p class="explanation-text">${explanation}</p>
-      <p class="footnote-text">📌 ${footnote || 'Grounded in verified metrics.'}</p>
+      <p class="footnote-text">${footnote || 'Grounded in verified metrics.'}</p>
     </div>
 
     <div class="card">
@@ -88,15 +95,19 @@ function renderRankedTab(districts) {
     return;
   }
 
-  const rows = districts.map(d => `
+  const rows = districts.map(d => {
+    const score = fmtScore(d.priority_score);
+    const scoreClass = score >= 75 ? 'high' : score >= 50 ? 'med' : 'low';
+    return `
     <tr class="table-row" onclick="window.selectDistrictRow('${d.district_name}')" tabindex="0" aria-label="Select ${d.district_name}">
       <td><strong>#${d.rank}</strong></td>
       <td>${d.district_name} ${dataBadge(d.data_quality)}</td>
       <td>${d.admin1}</td>
       <td>${(d.sector || "").replace(/_/g, " ")}</td>
-      <td><span class="score-pill score-${d.priority_score >= 75 ? 'high' : d.priority_score >= 50 ? 'med' : 'low'}">${d.priority_score}</span></td>
+      <td><span class="score-pill score-${scoreClass}">${score}</span></td>
       <td>${d.citizen_demand_count ?? 'N/A'} requests</td>
-    </tr>`).join("");
+    </tr>`;
+  }).join("");
 
   container.innerHTML = `
     <table class="data-table" aria-label="Ranked districts table">
@@ -113,14 +124,14 @@ function renderSilentNeedsTab(silentNeeds) {
   if (!container) return;
 
   if (!silentNeeds || silentNeeds.length === 0) {
-    container.innerHTML = `<div class="panel-empty-state"><p>✅ No silent need flags found for current filters.</p></div>`;
+    container.innerHTML = `<div class="panel-empty-state"><p>No silent need flags found for current filters.</p></div>`;
     return;
   }
 
   const cards = silentNeeds.map(sn => `
     <div class="alert-card alert-silent">
       <div class="alert-header">
-        <span>🔇 ${sn.district} <span class="state-tag">${sn.admin1 || ''}</span></span>
+        <span>${sn.district} <span class="state-tag">${sn.admin1 || ''}</span></span>
         <span class="severity-badge">Severity: ${sn.silent_need_severity ?? 'N/A'}</span>
       </div>
       <p>${sn.reason}</p>
@@ -139,11 +150,11 @@ function renderMismatchTab(mismatches, districts) {
   const container = document.getElementById("tab-mismatch-content");
   if (!container) return;
 
-  const scatter = `<div class="card"><h4>District Investment vs. Demand Scatter</h4>${renderQuadrantScatterSVG(districts || [])}</div>`;
+  const scatter = `<div class="card"><h4>District Investment vs. Demand</h4>${renderQuadrantScatterSVG(districts || [])}</div>`;
 
   let listHtml = "";
   if (!mismatches || mismatches.length === 0) {
-    listHtml = `<div class="panel-empty-state"><p>✅ No major mismatches detected.</p></div>`;
+    listHtml = `<div class="panel-empty-state"><p>No major mismatches detected.</p></div>`;
   } else {
     listHtml = mismatches.map(m => `
       <div class="alert-card ${m.mismatch_type === 'UNDER_FUNDED_HIGH_DEMAND' ? 'alert-danger' : 'alert-warning'}">
@@ -181,25 +192,25 @@ function renderImpactTab(impacts) {
           ${dataBadge(i.data_quality || "synthetic")}
         </div>
         <div class="impact-meta">
-          <span>📍 ${i.admin2 || 'N/A'}</span>
-          <span>🏗️ ${(i.sector || "").replace(/_/g, " ")}</span>
-          <span>✅ Completed: ${i.completion_date || 'N/A'}</span>
-          <span>⏱️ Window: ${i.window_days} days each side</span>
+          <span>${i.admin2 || 'N/A'}</span>
+          <span>${(i.sector || "").replace(/_/g, " ")}</span>
+          <span>Completed: ${i.completion_date || 'N/A'}</span>
+          <span>Window: ${i.window_days} days</span>
         </div>
         <div class="before-after-chart">
           <div>
-            <div class="bar-label">Before Completion: <strong>${i.pre_completion_request_count} requests</strong></div>
+            <div class="bar-label">Before: <strong>${i.pre_completion_request_count} requests</strong></div>
             <div class="bar-track"><div class="bar-fill bar-before" style="width:${preW}%"></div></div>
           </div>
           <div style="margin-top:8px;">
-            <div class="bar-label">After Completion: <strong>${i.post_completion_request_count} requests</strong></div>
+            <div class="bar-label">After: <strong>${i.post_completion_request_count} requests</strong></div>
             <div class="bar-track"><div class="bar-fill bar-after" style="width:${postW}%"></div></div>
           </div>
         </div>
         <div class="impact-result ${pctClass}">
-          ${pct <= 0 ? '▼' : '▲'} ${Math.abs(pct).toFixed(1)}% change — <em>${i.impact_summary}</em>
+          ${pct <= 0 ? '&#9660;' : '&#9650;'} ${Math.abs(pct).toFixed(1)}% — <em>${i.impact_summary}</em>
         </div>
-        <p class="disclaimer-text">⚠️ ${i.disclaimer}</p>
+        <p class="disclaimer-text">${i.disclaimer}</p>
       </div>`;
   }).join("");
 
@@ -220,7 +231,7 @@ function renderCommandTab() {
   container.innerHTML = `
     <div class="command-center">
       <div class="card">
-        <h4>🤖 Policymaker Natural Language Query</h4>
+        <h4>Policymaker Natural Language Query</h4>
         <p>Ask a question — the system converts it to a structured filter and executes it deterministically.</p>
         <div class="query-input-row">
           <input type="text" id="nl-query-input" placeholder="e.g. Show high-priority healthcare districts..." aria-label="Natural language query input"/>
@@ -244,7 +255,7 @@ function renderCommandTab() {
     const filterDisplay = document.getElementById("query-filter-display");
     const resultsTable = document.getElementById("query-results-table");
 
-    filterDisplay.innerHTML = `<div class="loading-state">⏳ Processing query...</div>`;
+    filterDisplay.innerHTML = `<div class="loading-state">Processing query...</div>`;
     resultPanel.style.display = "block";
 
     const data = await postQueryAPI(queryText);
@@ -252,14 +263,16 @@ function renderCommandTab() {
     filterDisplay.innerHTML = `
       <h4>Structured Filter (transparent)</h4>
       <pre class="filter-json">${JSON.stringify(data.structured_filter, null, 2)}</pre>
-      <p class="interpretation-text">💡 ${data.interpretation}</p>
+      <p class="interpretation-text">${data.interpretation}</p>
       <p><strong>${data.result_count} district(s) matched.</strong></p>`;
 
     if (data.results && data.results.length > 0) {
-      const rows = data.results.map(d => `
-        <tr><td>#${d.rank}</td><td>${d.district_name} ${dataBadge(d.data_quality)}</td>
+      const rows = data.results.map(d => {
+        const score = fmtScore(d.priority_score);
+        return `<tr><td>#${d.rank}</td><td>${d.district_name} ${dataBadge(d.data_quality)}</td>
         <td>${d.admin1}</td>
-        <td><span class="score-pill score-${d.priority_score >= 75 ? 'high' : 'med'}">${d.priority_score}</span></td></tr>`).join("");
+        <td><span class="score-pill score-${score >= 75 ? 'high' : 'med'}">${score}</span></td></tr>`;
+      }).join("");
       resultsTable.innerHTML = `<table class="data-table"><thead><tr><th>Rank</th><th>District</th><th>State</th><th>Score</th></tr></thead><tbody>${rows}</tbody></table>`;
     } else {
       resultsTable.innerHTML = `<p>No districts matched the filter.</p>`;
@@ -276,7 +289,7 @@ function renderSubmitRequestTab() {
 
   container.innerHTML = `
     <div class="card">
-      <h4>📝 Submit a Citizen Development Request</h4>
+      <h4>Submit a Citizen Development Request</h4>
       <p>Report an infrastructure issue in your area. Your request will be analysed and categorised by the system.</p>
 
       <div class="form-group">
@@ -311,16 +324,18 @@ function renderSubmitRequestTab() {
         <div class="textarea-row">
           <textarea id="req-text" rows="4" placeholder="e.g. No primary health centre in our block. Nearest hospital is 20km away." aria-label="Describe your infrastructure issue"></textarea>
           <button id="mic-btn" class="btn-mic" title="${speechSupported ? 'Click to start voice input' : 'Voice input not supported in this browser'}" aria-label="Voice input" ${speechSupported ? '' : 'disabled'}>
-            🎤
+            <i data-lucide="mic" class="dpi-icon-sm"></i>
           </button>
         </div>
-        ${!speechSupported ? '<p class="voice-unsupported-msg">⚠️ Voice input requires a modern browser (Chrome, Edge recommended).</p>' : '<p class="voice-hint" id="voice-status">Click 🎤 to dictate your request</p>'}
+        ${!speechSupported ? '<p class="voice-unsupported-msg">Voice input requires a modern browser (Chrome, Edge recommended).</p>' : '<p class="voice-hint" id="voice-status">Click the mic to dictate your request</p>'}
       </div>
 
       <button id="req-submit-btn" class="btn-primary" aria-label="Submit request">Submit Request</button>
     </div>
 
     <div id="req-result-panel" class="card" style="display:none;"></div>`;
+
+  if (typeof lucide !== "undefined") lucide.createIcons();
 
   // Mic button handler
   if (speechSupported) {
@@ -331,15 +346,12 @@ function renderSubmitRequestTab() {
       const lang = document.getElementById("req-lang").value;
       if (isListening) {
         stopListening();
-        micBtn.textContent = "🎤";
-        if (statusEl) statusEl.textContent = "Click 🎤 to dictate your request";
+        if (statusEl) statusEl.textContent = "Click the mic to dictate your request";
       } else {
-        micBtn.textContent = "⏹️";
         if (statusEl) statusEl.textContent = "Listening... speak now.";
         startListening(lang, (transcript) => {
           document.getElementById("req-text").value = transcript;
         }, () => {
-          micBtn.textContent = "🎤";
           if (statusEl) statusEl.textContent = "Voice input captured.";
         });
       }
@@ -352,7 +364,7 @@ function renderSubmitRequestTab() {
     if (!rawText) { alert("Please describe your issue before submitting."); return; }
 
     const resultPanel = document.getElementById("req-result-panel");
-    resultPanel.innerHTML = `<div class="loading-state">⏳ Analysing your request...</div>`;
+    resultPanel.innerHTML = `<div class="loading-state">Analysing your request...</div>`;
     resultPanel.style.display = "block";
 
     const payload = {
@@ -367,7 +379,7 @@ function renderSubmitRequestTab() {
     const record = result.record || {};
 
     resultPanel.innerHTML = `
-      <h4>✅ Request Submitted</h4>
+      <h4>Request Submitted</h4>
       ${dataBadge(record.data_quality || "synthetic")}
       <div class="stats-grid" style="margin-top:12px;">
         <div class="stat-item"><span class="stat-value">${analysis.category?.replace(/_/g,' ') || 'N/A'}</span><span class="stat-label">Category</span></div>

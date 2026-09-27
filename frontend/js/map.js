@@ -75,13 +75,14 @@ function renderMapMarkers(districts, onSelectDistrictCallback) {
     });
 
     const badgeClass = d.data_quality === "real" ? "badge-real" : "badge-synthetic";
-    const badgeText = d.data_quality === "real" ? "REAL DATA" : "SYNTHETIC DEMO DATA";
+    const badgeText = d.data_quality === "real" ? "REAL DATA" : "SYNTHETIC DEMO";
+    const scoreDisplay = Math.round(d.priority_score || 50);
 
     marker.bindPopup(`
       <div class="map-popup-content">
         <span class="badge ${badgeClass}">${badgeText}</span>
         <h4>${d.district_name} (${d.admin1})</h4>
-        <p><strong>Priority Score:</strong> ${score}/100 (Rank #${d.rank || 1})</p>
+        <p><strong>Priority Score:</strong> ${scoreDisplay}/100 (Rank #${d.rank || 1})</p>
         <p><strong>Sector:</strong> ${d.sector || 'healthcare'}</p>
         <p><strong>Population:</strong> ${d.population ? d.population.toLocaleString() : 'N/A'}</p>
         <button class="btn-popup-select" onclick="window.selectDistrictFromMap('${d.district_name}')">View Full Evidence Panel</button>
