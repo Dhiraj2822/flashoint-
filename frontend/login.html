@@ -7,7 +7,7 @@
   <meta name="description" content="Secure login for Development Priority Intelligence platform — citizen portal and policymaker dashboard."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 
   <!-- Design System Tokens & Shared Components -->
   <link rel="stylesheet" href="styles/tokens.css"/>
@@ -15,252 +15,335 @@
 
   <!-- Lucide Icons CDN -->
   <script src="https://unpkg.com/lucide@latest"></script>
+
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: var(--dpi-font-family);
       min-height: 100vh;
-      background: linear-gradient(135deg, #0f0c29 0%, #1a1a4e 40%, #24243e 100%);
+      background: radial-gradient(circle at 50% 15%, rgba(5, 150, 105, 0.12) 0%, transparent 60%), #0b1120;
+      color: #f8fafc;
       display: flex;
       align-items: center;
       justify-content: center;
       position: relative;
-      overflow: hidden;
+      overflow-x: hidden;
+      padding: var(--dpi-space-2);
     }
 
-    /* Animated background orbs */
+    /* Ambient background grid lines */
     body::before {
       content: '';
       position: fixed;
-      top: -20%;
-      left: -10%;
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, rgba(99,102,241,0.15) 0%, transparent 70%);
-      border-radius: 50%;
-      animation: float 8s ease-in-out infinite;
-    }
-    body::after {
-      content: '';
-      position: fixed;
-      bottom: -20%;
-      right: -10%;
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, rgba(16,185,129,0.12) 0%, transparent 70%);
-      border-radius: 50%;
-      animation: float 10s ease-in-out infinite reverse;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0px) scale(1); }
-      50% { transform: translateY(-30px) scale(1.05); }
+      inset: 0;
+      background-image: 
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
     }
 
     .login-wrapper {
       position: relative;
       z-index: 10;
       width: 100%;
-      max-width: 480px;
-      padding: 16px;
+      max-width: 440px;
     }
 
     /* Brand header */
     .brand {
       text-align: center;
-      margin-bottom: 40px;
+      margin-bottom: var(--dpi-space-3);
     }
-    .brand-icon {
-      font-size: 3rem;
-      display: block;
-      margin-bottom: 12px;
-      filter: drop-shadow(0 0 16px rgba(99,102,241,0.6));
+
+    .brand-meta-row {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--dpi-space-1);
+      margin-bottom: var(--dpi-space-1);
     }
-    .brand-title {
-      font-size: 1.6rem;
-      font-weight: 800;
-      color: #fff;
-      letter-spacing: -0.5px;
-      line-height: 1.2;
-    }
-    .brand-sub {
-      font-size: 0.85rem;
-      color: rgba(255,255,255,0.5);
-      margin-top: 6px;
-      font-weight: 400;
-    }
-    .brand-badge {
+
+    .brand-country-pill {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: rgba(99,102,241,0.2);
-      border: 1px solid rgba(99,102,241,0.4);
-      color: #a5b4fc;
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      margin-top: 10px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: var(--dpi-radius-pill);
+      padding: 3px 10px;
+      font-size: var(--dpi-font-size-xs);
+      font-weight: var(--dpi-font-weight-semibold);
+      color: #f1f5f9;
       letter-spacing: 0.3px;
+    }
+
+    .country-code-tag {
+      background: var(--dpi-primary);
+      color: #ffffff;
+      padding: 1px 5px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .brics-muted-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: #94a3b8;
+      padding: 3px 10px;
+      border-radius: var(--dpi-radius-pill);
+      font-size: var(--dpi-font-size-xs);
+      font-weight: var(--dpi-font-weight-medium);
+    }
+
+    .brand-title {
+      font-size: var(--dpi-font-size-xl);
+      font-weight: var(--dpi-font-weight-bold);
+      color: #ffffff;
+      letter-spacing: -0.4px;
+      line-height: 1.25;
+      margin-top: var(--dpi-space-1);
+    }
+
+    .brand-sub {
+      font-size: var(--dpi-font-size-sm);
+      color: #94a3b8;
+      margin-top: 6px;
+      font-weight: var(--dpi-font-weight-regular);
     }
 
     /* Role selector */
     .role-selector {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 28px;
+      gap: var(--dpi-space-1);
+      margin-bottom: var(--dpi-space-2);
     }
+
     .role-card {
-      background: rgba(255,255,255,0.04);
-      border: 2px solid rgba(255,255,255,0.08);
-      border-radius: 16px;
-      padding: 20px 16px;
+      background: rgba(30, 41, 59, 0.7);
+      border: 1.5px solid rgba(255,255,255,0.08);
+      border-radius: var(--dpi-radius-lg);
+      padding: var(--dpi-space-2) var(--dpi-space-1);
       cursor: pointer;
-      transition: all 0.25s ease;
+      transition: all 0.2s ease;
       text-align: center;
       user-select: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
+
     .role-card:hover {
-      background: rgba(255,255,255,0.08);
+      background: rgba(30, 41, 59, 0.95);
       border-color: rgba(255,255,255,0.18);
-      transform: translateY(-2px);
+      transform: translateY(-1px);
     }
-    .role-card.active.citizen {
-      background: rgba(16,185,129,0.12);
-      border-color: #10b981;
-      box-shadow: 0 0 20px rgba(16,185,129,0.2);
+
+    .role-card.active {
+      background: rgba(5, 150, 105, 0.12);
+      border-color: var(--dpi-primary);
+      box-shadow: 0 0 0 1px var(--dpi-primary), 0 4px 12px rgba(5, 150, 105, 0.18);
     }
-    .role-card.active.admin {
-      background: rgba(99,102,241,0.14);
-      border-color: #6366f1;
-      box-shadow: 0 0 20px rgba(99,102,241,0.25);
+
+    .role-icon-box {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--dpi-radius-base);
+      background: rgba(255,255,255,0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: var(--dpi-space-1);
+      color: #cbd5e1;
+      transition: all 0.2s ease;
     }
-    .role-icon { font-size: 2rem; display: block; margin-bottom: 8px; }
+
+    .role-card.active .role-icon-box {
+      background: var(--dpi-primary);
+      color: #ffffff;
+    }
+
     .role-name {
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: #fff;
+      font-size: var(--dpi-font-size-base);
+      font-weight: var(--dpi-font-weight-bold);
+      color: #ffffff;
     }
+
     .role-desc {
-      font-size: 0.73rem;
-      color: rgba(255,255,255,0.45);
-      margin-top: 4px;
+      font-size: var(--dpi-font-size-xs);
+      color: #94a3b8;
+      margin-top: 2px;
     }
 
     /* Login card */
     .login-card {
-      background: rgba(255,255,255,0.04);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(255,255,255,0.10);
-      border-radius: 24px;
-      padding: 32px 28px;
-      box-shadow: 0 32px 64px rgba(0,0,0,0.4);
+      background: #1e293b;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--dpi-radius-lg);
+      padding: var(--dpi-space-3);
+      box-shadow: 0 16px 36px rgba(0,0,0,0.35);
     }
 
     .form-group {
-      margin-bottom: 18px;
+      margin-bottom: var(--dpi-space-2);
     }
+
     .form-group label {
       display: block;
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: rgba(255,255,255,0.65);
-      margin-bottom: 8px;
+      font-size: var(--dpi-font-size-xs);
+      font-weight: var(--dpi-font-weight-medium);
+      color: #cbd5e1;
+      margin-bottom: 6px;
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
+
     .form-group input {
       width: 100%;
-      background: rgba(255,255,255,0.06);
-      border: 1.5px solid rgba(255,255,255,0.10);
-      border-radius: 12px;
-      padding: 14px 16px;
-      color: #fff;
-      font-size: 0.95rem;
-      font-family: 'Inter', sans-serif;
-      transition: border-color 0.2s, box-shadow 0.2s;
+      background: #0f172a;
+      border: 1.5px solid #334155;
+      border-radius: var(--dpi-radius-base);
+      padding: 11px 14px;
+      color: #f8fafc;
+      font-size: var(--dpi-font-size-base);
+      font-family: var(--dpi-font-family);
       outline: none;
-    }
-    .form-group input::placeholder { color: rgba(255,255,255,0.25); }
-    .form-group input:focus {
-      border-color: rgba(99,102,241,0.6);
-      box-shadow: 0 0 0 3px rgba(99,102,241,0.12);
-      background: rgba(255,255,255,0.09);
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
     }
 
+    .form-group input::placeholder {
+      color: #64748b;
+    }
+
+    .form-group input:focus {
+      border-color: var(--dpi-primary);
+      box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.25);
+      background: #0b1329;
+    }
+
+    /* Primary Login Button */
     .btn-login {
       width: 100%;
-      padding: 15px;
-      border: none;
-      border-radius: 12px;
-      font-size: 1rem;
-      font-weight: 700;
-      font-family: 'Inter', sans-serif;
+      padding: 12px var(--dpi-space-2);
+      border: 1.5px solid transparent;
+      border-radius: var(--dpi-radius-base);
+      font-size: var(--dpi-font-size-base);
+      font-weight: var(--dpi-font-weight-bold);
+      font-family: var(--dpi-font-family);
       cursor: pointer;
-      transition: all 0.25s ease;
-      margin-top: 8px;
-      display: flex;
+      transition: all 0.2s ease;
+      margin-top: 4px;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-    }
-    .btn-login.citizen-btn {
-      background: linear-gradient(135deg, #059669 0%, #10b981 100%);
-      color: #fff;
-      box-shadow: 0 8px 24px rgba(16,185,129,0.35);
-    }
-    .btn-login.citizen-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 32px rgba(16,185,129,0.5);
-    }
-    .btn-login.admin-btn {
-      background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
-      color: #fff;
-      box-shadow: 0 8px 24px rgba(99,102,241,0.35);
-    }
-    .btn-login.admin-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 32px rgba(99,102,241,0.5);
+      gap: var(--dpi-space-1);
+      background: var(--dpi-primary);
+      color: #ffffff;
+      box-shadow: var(--dpi-shadow-card);
     }
 
+    .btn-login:hover {
+      background: var(--dpi-primary-hover);
+      box-shadow: var(--dpi-shadow-elevated);
+      transform: translateY(-1px);
+    }
+
+    .btn-login:active {
+      transform: translateY(1px);
+    }
+
+    /* Error Message */
     .error-msg {
-      background: rgba(239,68,68,0.12);
-      border: 1px solid rgba(239,68,68,0.3);
-      color: #fca5a5;
+      background: var(--dpi-status-critical-bg);
+      border: 1px solid var(--dpi-status-critical-border);
+      color: var(--dpi-status-critical-text);
       padding: 10px 14px;
-      border-radius: 10px;
-      font-size: 0.83rem;
-      margin-top: 14px;
+      border-radius: var(--dpi-radius-base);
+      font-size: var(--dpi-font-size-sm);
+      font-weight: var(--dpi-font-weight-medium);
+      margin-top: var(--dpi-space-2);
       display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
       text-align: center;
     }
-    .error-msg.visible { display: block; }
 
-    .hint-box {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 12px;
-      padding: 14px 16px;
-      margin-top: 20px;
+    .error-msg.visible {
+      display: flex;
     }
-    .hint-box p {
-      font-size: 0.75rem;
-      color: rgba(255,255,255,0.35);
+
+    /* Quieter Demo Credentials Box */
+    .demo-creds-details {
+      margin-top: var(--dpi-space-2);
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: var(--dpi-radius-base);
+      overflow: hidden;
+      font-size: var(--dpi-font-size-xs);
+      color: #94a3b8;
+    }
+
+    .demo-creds-details summary {
+      padding: 8px 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: var(--dpi-font-weight-medium);
+      color: #94a3b8;
+      user-select: none;
+      transition: color 0.15s ease;
+    }
+
+    .demo-creds-details summary:hover {
+      color: #f1f5f9;
+    }
+
+    .demo-creds-body {
+      padding: 10px 12px 12px;
+      border-top: 1px solid rgba(255,255,255,0.06);
       line-height: 1.6;
     }
-    .hint-box code {
-      color: rgba(255,255,255,0.6);
+
+    .demo-creds-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .demo-cred-chip {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--dpi-radius-sm);
+      padding: 6px 8px;
+    }
+
+    .demo-cred-chip span {
+      display: block;
+      color: #cbd5e1;
+      font-weight: var(--dpi-font-weight-semibold);
+      margin-bottom: 2px;
+    }
+
+    .demo-cred-chip code {
+      color: var(--dpi-primary-light);
       font-family: monospace;
-      font-size: 0.78rem;
+      font-size: 11px;
     }
 
     .footer-note {
       text-align: center;
-      margin-top: 24px;
-      font-size: 0.72rem;
-      color: rgba(255,255,255,0.25);
+      margin-top: var(--dpi-space-3);
+      font-size: var(--dpi-font-size-xs);
+      color: #64748b;
     }
   </style>
 </head>
@@ -269,23 +352,33 @@
 <div class="login-wrapper">
   <!-- Brand -->
   <div class="brand">
-    <span class="brand-icon">🇮🇳</span>
-    <div class="brand-title">Development Priority Intelligence</div>
-    <div class="brand-sub">Multilingual AI Platform for Digital Public Infrastructure</div>
-    <div class="brand-badge">🌐 BRICS Track 1 · Digital Public Good</div>
+    <div class="brand-meta-row">
+      <span class="brand-country-pill">
+        <span class="country-code-tag">IND</span> India Pilot
+      </span>
+      <span class="brics-muted-badge">
+        <i data-lucide="globe" class="dpi-icon-sm"></i> BRICS Track 1 · DPG
+      </span>
+    </div>
+    <h1 class="brand-title">Development Priority Intelligence</h1>
+    <p class="brand-sub">Multilingual AI Platform for Digital Public Infrastructure</p>
   </div>
 
   <!-- Role Selector -->
   <div class="role-selector">
-    <div class="role-card citizen active" id="role-citizen" onclick="selectRole('citizen')">
-      <span class="role-icon">🧑‍🌾</span>
+    <div class="role-card active" id="role-citizen" onclick="selectRole('citizen')">
+      <div class="role-icon-box">
+        <i data-lucide="users" class="dpi-icon-md"></i>
+      </div>
       <div class="role-name">Citizen</div>
-      <div class="role-desc">Submit your development request</div>
+      <div class="role-desc">Submit requests</div>
     </div>
-    <div class="role-card admin" id="role-admin" onclick="selectRole('admin')">
-      <span class="role-icon">🏛️</span>
+    <div class="role-card" id="role-admin" onclick="selectRole('admin')">
+      <div class="role-icon-box">
+        <i data-lucide="landmark" class="dpi-icon-md"></i>
+      </div>
       <div class="role-name">Policymaker</div>
-      <div class="role-desc">Access analytics dashboard</div>
+      <div class="role-desc">Access dashboard</div>
     </div>
   </div>
 
@@ -294,25 +387,38 @@
     <form id="login-form" onsubmit="handleLogin(event)">
       <div class="form-group">
         <label for="username">Username</label>
-        <input type="text" id="username" placeholder="Enter your username" autocomplete="username" required/>
+        <input type="text" id="username" placeholder="Enter username (e.g. citizen)" autocomplete="username" required/>
       </div>
       <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" id="password" placeholder="Enter your password" autocomplete="current-password" required/>
+        <input type="password" id="password" placeholder="Enter password" autocomplete="current-password" required/>
       </div>
-      <button type="submit" class="btn-login citizen-btn" id="login-btn">
-        <span>🧑‍🌾</span> Sign in as Citizen
+      <button type="submit" class="btn-login" id="login-btn">
+        <i data-lucide="users"></i> Sign in as Citizen
       </button>
-      <div class="error-msg" id="error-msg">❌ Invalid credentials. Please try again.</div>
+      <div class="error-msg" id="error-msg">
+        <i data-lucide="alert-circle" class="dpi-icon-sm"></i> Invalid credentials. Please try again.
+      </div>
     </form>
 
-    <div class="hint-box">
-      <p>
-        <strong style="color:rgba(255,255,255,0.5);">Demo credentials:</strong><br>
-        Citizen → <code>citizen</code> / <code>citizen123</code><br>
-        Policymaker → <code>admin</code> / <code>dpi@2025</code>
-      </p>
-    </div>
+    <!-- Quieter Demo Credentials Box (collapsible) -->
+    <details class="demo-creds-details" open>
+      <summary>
+        <i data-lucide="key" class="dpi-icon-sm"></i> Demo Credentials
+      </summary>
+      <div class="demo-creds-body">
+        <div class="demo-creds-grid">
+          <div class="demo-cred-chip">
+            <span>Citizen</span>
+            <code>citizen</code> / <code>citizen123</code>
+          </div>
+          <div class="demo-cred-chip">
+            <span>Policymaker</span>
+            <code>admin</code> / <code>dpi@2025</code>
+          </div>
+        </div>
+      </div>
+    </details>
   </div>
 
   <div class="footer-note">
@@ -330,21 +436,17 @@
 
   function selectRole(role) {
     currentRole = role;
-    document.getElementById('role-citizen').classList.remove('active');
-    document.getElementById('role-admin').classList.remove('active');
-    document.getElementById('role-citizen').classList.remove('citizen');
-    document.getElementById('role-admin').classList.remove('admin');
-
-    document.getElementById('role-' + role).classList.add('active', role);
+    document.getElementById('role-citizen').classList.toggle('active', role === 'citizen');
+    document.getElementById('role-admin').classList.toggle('active', role === 'admin');
 
     const btn = document.getElementById('login-btn');
     if (role === 'citizen') {
-      btn.className = 'btn-login citizen-btn';
-      btn.innerHTML = '<span>🧑‍🌾</span> Sign in as Citizen';
+      btn.innerHTML = '<i data-lucide="users"></i> Sign in as Citizen';
     } else {
-      btn.className = 'btn-login admin-btn';
-      btn.innerHTML = '<span>🏛️</span> Sign in as Policymaker';
+      btn.innerHTML = '<i data-lucide="landmark"></i> Sign in as Policymaker';
     }
+
+    if (typeof lucide !== 'undefined') lucide.createIcons();
 
     document.getElementById('error-msg').classList.remove('visible');
     document.getElementById('username').value = '';
@@ -364,6 +466,7 @@
       window.location.href = cred.redirect;
     } else {
       document.getElementById('error-msg').classList.add('visible');
+      if (typeof lucide !== 'undefined') lucide.createIcons();
     }
   }
 

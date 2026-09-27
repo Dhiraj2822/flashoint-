@@ -124,7 +124,7 @@ uvicorn backend.app.main:app --reload --port 8000
 | :--- | :--- | :--- |
 | **STEP 0** | Audit + design tokens (`tokens.css`, hardcoded audit in HANDOFF.md) | **DONE** |
 | **STEP 1** | Global shell: icons + shared components (Lucide CDN, shared buttons/inputs/cards/badges) | **DONE** |
-| **STEP 2** | Login screen redesign (Styled inputs, clean brand glyph, muted demo credentials box) | PENDING |
+| **STEP 2** | Login screen redesign (Styled inputs, clean brand glyph, muted demo credentials box) | **DONE** |
 | **STEP 3** | Policymaker dashboard: navbar + layout skeleton (Single primary green, compact lang dropdown, rebalanced columns) | PENDING |
 | **STEP 4** | Policymaker dashboard: default populated state (Auto-select top district on load, whole numbers, soft map legend) | PENDING |
 | **STEP 5** | Policymaker dashboard: table + tabs polish (Distinct typography, hover/active states, tab data verification) | PENDING |
@@ -199,8 +199,18 @@ uvicorn backend.app.main:app --reload --port 8000
 
 ---
 
+### STEP 2 — Login Screen Redesign
+- Replaced the large floating emoji glyph with a clean national badge (`[IND] India Pilot`) paired with the product title.
+- Muted and resized the BRICS badge with Lucide `globe` icon relative to the tagline.
+- Replaced role emojis with Lucide icons (`users` for Citizen, `landmark` for Policymaker).
+- Styled form inputs with dark slate fills, 1.5px border, and focus rings using `--dpi-primary`.
+- Converted primary sign-in button to the unified primary green token (`--dpi-primary`) with Lucide icons.
+- Redesigned demo-credentials box into a quiet, collapsible `<details>` component with clean credential chips.
+
+---
+
 ## NEXT STEP
-Proceed to **STEP 2 — Login screen redesign**. Style inputs with proper borders/focus rings, demote/pair the "IN" glyph, mute BRICS badge, quiet down the demo credentials box, and replace role emojis with Lucide icons.
+Proceed to **STEP 3 — Policymaker dashboard: navbar + layout skeleton**. Change navbar to single primary green (replace blue), replace 3 separate language pills with one compact dropdown/segmented control, and rebalance sidebar/map/evidence-panel columns and vertical tab height.
 
 
 
