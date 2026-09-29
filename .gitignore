@@ -34,3 +34,4 @@ data/raw/*.cache
 
 # Local audit artifacts
 CURRENT_IMPLEMENTATION_AUDIT.md
+.firebase/
