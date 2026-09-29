@@ -32,3 +32,5 @@ data/raw/*.cache
 *.log
 *.db
 
+# Local audit artifacts
+CURRENT_IMPLEMENTATION_AUDIT.md
