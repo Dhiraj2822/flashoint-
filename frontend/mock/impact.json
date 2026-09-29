@@ -11,11 +11,11 @@
       "pre_window": {"start": "2025-04-04", "end": "2025-10-01"},
       "post_window": {"start": "2025-10-01", "end": "2026-03-30"}
     },
-    "pre_completion_request_count": 48,
-    "post_completion_request_count": 12,
-    "volume_change": -36,
-    "percentage_change": -75.0,
-    "impact_summary": "Significant Demand Reduction (High Positive Impact)",
+    "pre_completion_request_count": 3,
+    "post_completion_request_count": 8,
+    "volume_change": 5,
+    "percentage_change": 166.7,
+    "impact_summary": "Demand Increased (Persistent / Emerging Need)",
     "data_quality": "synthetic",
     "disclaimer": "based on available data, not a guarantee"
   },
@@ -31,11 +31,31 @@
       "pre_window": {"start": "2025-05-19", "end": "2025-11-15"},
       "post_window": {"start": "2025-11-15", "end": "2026-05-14"}
     },
-    "pre_completion_request_count": 32,
-    "post_completion_request_count": 8,
-    "volume_change": -24,
-    "percentage_change": -75.0,
+    "pre_completion_request_count": 5,
+    "post_completion_request_count": 3,
+    "volume_change": -2,
+    "percentage_change": -40.0,
     "impact_summary": "Significant Demand Reduction (High Positive Impact)",
+    "data_quality": "synthetic",
+    "disclaimer": "based on available data, not a guarantee"
+  },
+  {
+    "project_id": "PROJ-COMP-003",
+    "project_name": "Pindra All-Weather Highway Link Road",
+    "sector": "roads_transport",
+    "admin2": "Varanasi",
+    "completion_date": "2025-08-20",
+    "is_measurable": true,
+    "window_days": 180,
+    "window_periods": {
+      "pre_window": {"start": "2025-02-21", "end": "2025-08-20"},
+      "post_window": {"start": "2025-08-20", "end": "2026-02-16"}
+    },
+    "pre_completion_request_count": 1,
+    "post_completion_request_count": 4,
+    "volume_change": 3,
+    "percentage_change": 300.0,
+    "impact_summary": "Demand Increased (Persistent / Emerging Need)",
     "data_quality": "synthetic",
     "disclaimer": "based on available data, not a guarantee"
   }

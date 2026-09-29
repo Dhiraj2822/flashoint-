@@ -96,6 +96,13 @@ function activateTab(tabId) {
     }
   }
 
+  // Reset scroll on panel switch so top KPI cards always render fully visible below navbar with normal padding
+  const centerPanel = document.querySelector(".center-panel");
+  if (centerPanel) {
+    centerPanel.scrollTop = 0;
+  }
+  window.scrollTo(0, 0);
+
   // When switching back to Map & Rankings, ensure Leaflet calculates dimensions properly
   if (tabId === "ranked" && typeof mapInstance !== "undefined" && mapInstance) {
     setTimeout(() => {
