@@ -119,8 +119,8 @@ DPI was designed with open standards to ensure zero proprietary vendor lock-in a
 
 ### 1. Clone & Setup Environment
 ```bash
-git clone https://github.com/GauriShinde911/flashoint-.git
-cd flashoint-
+git clone https://github.com/Dhiraj2822/flashpoint-.git
+cd flashpoint-
 
 # Create virtual environment
 python -m venv venv

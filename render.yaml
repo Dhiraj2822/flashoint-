@@ -17,4 +17,4 @@ services:
       - key: GEMINI_API_KEY
         sync: false
       - key: ALLOWED_ORIGINS
-        value: "https://development-priority-intel.web.app,https://development-priority-intel.firebaseapp.com,http://localhost:3000,http://127.0.0.1:3000"
+        value: "https://dpi-flashpoint-2026.web.app,https://dpi-flashpoint-2026.firebaseapp.com,https://dpi-flashoint-2026.web.app,https://dpi-flashoint-2026.firebaseapp.com,http://localhost:3000,http://127.0.0.1:3000"
