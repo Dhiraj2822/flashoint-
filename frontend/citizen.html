@@ -410,6 +410,7 @@
 <body>
 
 <!-- Auth guard -->
+<script src="config.js"></script>
 <script>
   const _role = sessionStorage.getItem('dpi_role');
   if (_role !== 'citizen') window.location.href = 'login.html';
@@ -710,7 +711,7 @@
       document.getElementById('photo-evidence-rec').textContent = '';
 
       try {
-        const res = await fetch('http://localhost:8000/api/v1/analyze-photo', {
+        const res = await fetch(`${API_BASE_URL}/api/v1/analyze-photo`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -765,7 +766,7 @@
     };
 
     try {
-      const res = await fetch('http://localhost:8000/requests', {
+      const res = await fetch(`${API_BASE_URL}/requests`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
