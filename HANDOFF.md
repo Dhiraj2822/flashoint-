@@ -61,6 +61,7 @@
 4. **Auto-select top district**: Evidence panel pre-populated on load.
 5. **Segmented language control**: Segmented pill control replaces ghost buttons.
 6. **Lucide icons everywhere**: Zero emoji remaining across the application.
+7. **Collapsible Data Sources Footer**: Added interactive toggle button with down arrow / chevron icon to expand ("See") or collapse ("Hide") dataset records and census notes into a slim status bar.
 
 ---
 
@@ -73,6 +74,8 @@
 - `REDESIGN STEP 3b: Restructure dashboard navigation from horizontal tabs to left vertical nav`
 - `REDESIGN STEP 5b: Fix under-filled views with expanded charts, summary strips, and supporting tables`
 - `REDESIGN STEP 5c: Fix Impact Measurement view color/label logic bug, bar scaling, and sticky navbar layout clipping`
+- `feat: add collapsible down arrow toggle to hide or see Data Sources footer`
+- `docs: update HANDOFF.md with collapsible footer details`
 
 ---
 
