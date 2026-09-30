@@ -126,8 +126,10 @@ function setupLangSwitcher() {
 }
 
 async function renderFooter() {
-  const footer = document.getElementById("datasets-footer");
-  if (!footer) return;
+  const footerContainer = document.getElementById("datasets-footer");
+  if (!footerContainer) return;
+  const appFooter = document.querySelector(".app-footer");
+
   try {
     const data = await getDatasetsAPI();
     const datasets = data.datasets || [];
@@ -142,11 +144,56 @@ async function renderFooter() {
         <span class="ds-meta">v${d.version} · ${d.record_count} records · ${d.ingested_at?.slice(0,10) || 'N/A'}</span>
       </div>`).join("");
 
-    footer.innerHTML = `
-      <div class="footer-datasets"><h4>Data Sources &amp; Versions</h4>${dsHtml}</div>
-      <div class="census-note"><em>${note}</em></div>`;
+    footerContainer.innerHTML = `
+      <div class="footer-header-bar" id="footer-toggle-bar" role="button" tabindex="0" aria-expanded="true" aria-controls="footer-collapsible-content">
+        <div class="footer-header-left">
+          <i data-lucide="database" class="dpi-icon-xs" style="color:var(--dpi-primary);"></i>
+          <h4>Data Sources &amp; Versions</h4>
+          <span class="footer-header-badge">${datasets.length} datasets</span>
+        </div>
+        <button type="button" class="footer-toggle-btn" id="footer-toggle-btn" aria-label="Toggle Data Sources">
+          <span id="footer-toggle-label">Hide</span>
+          <i data-lucide="chevron-down" class="footer-chevron-icon dpi-icon-xs"></i>
+        </button>
+      </div>
+      <div id="footer-collapsible-content" class="footer-collapsible-content">
+        <div class="footer-datasets-list">${dsHtml}</div>
+        <div class="census-note"><em>${note}</em></div>
+      </div>`;
+
+    if (window.refreshIcons) window.refreshIcons();
+
+    let isCollapsed = false;
+    const toggleBar = document.getElementById("footer-toggle-bar");
+    const toggleBtn = document.getElementById("footer-toggle-btn");
+    const toggleLabel = document.getElementById("footer-toggle-label");
+
+    function toggleFooter(e) {
+      if (e) e.stopPropagation();
+      isCollapsed = !isCollapsed;
+      if (appFooter) {
+        appFooter.classList.toggle("collapsed", isCollapsed);
+      }
+      if (toggleBar) {
+        toggleBar.setAttribute("aria-expanded", isCollapsed ? "false" : "true");
+      }
+      if (toggleLabel) {
+        toggleLabel.textContent = isCollapsed ? "See" : "Hide";
+      }
+      if (window.refreshIcons) window.refreshIcons();
+    }
+
+    if (toggleBar) {
+      toggleBar.addEventListener("click", toggleFooter);
+      toggleBar.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          toggleFooter();
+        }
+      });
+    }
   } catch (e) {
-    footer.innerHTML = `<p>Dataset metadata unavailable.</p>`;
+    footerContainer.innerHTML = `<p>Dataset metadata unavailable.</p>`;
   }
 }
 
